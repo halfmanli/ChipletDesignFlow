@@ -1,0 +1,11 @@
+tg_cnt 5
+task_cnt 20 1
+task_degree 3 2
+
+gen_series_parallel
+series_len 0 0
+series_wid 0 0
+series_global_xover 20 
+tg_write
+eps_write
+vcg_write

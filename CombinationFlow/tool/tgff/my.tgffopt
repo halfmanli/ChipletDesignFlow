@@ -1,0 +1,7 @@
+tg_cnt 5
+task_cnt 25 5
+task_degree 3 3
+
+tg_write
+eps_write
+vcg_write

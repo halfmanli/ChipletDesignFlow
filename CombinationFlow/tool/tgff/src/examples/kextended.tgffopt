@@ -1,0 +1,43 @@
+#---------------------------------------------
+# Series-parallel graph generation example
+#---------------------------------------------
+# Basic definitions
+seed 1
+period_mul 1
+tg_cnt 3
+task_cnt 22 1
+task_degree 2 3
+
+#---------------------------------------------
+# New options
+#---------------------------------------------
+# Task graph labels
+tg_label MY_TASK_GRAPH
+
+# Offsets work with task graphs as well.  Can be any integer number.
+tg_offset MY_TASK_GRAPH -12
+
+# Probability that the task graph is periodic
+prob_periodic .4
+
+# Probability that the graph has multiple start nodes
+prob_multi_start_nodes .5
+
+# Average number of start nodes for graphs with multiple start nodes
+# (In this case it is 3 +/- 2)
+start_node 3 2
+
+#-------------------------------------------------
+# Output commands
+#-------------------------------------------------
+tg_write
+eps_write
+vcg_write
+
+table_label COMMUN
+table_cnt 3
+table_offset COMMUN 12
+table_attrib price 80 20
+type_attrib exec_time 50 20
+trans_write
+

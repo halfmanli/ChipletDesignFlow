@@ -1,0 +1,395 @@
+@HYPERPERIOD 9600
+
+
+@PE 0 {
+#	cost	n_interrupts	interrupt_time
+	84.5116	0	0
+
+#	type	exec_time
+	0	1152
+	1	928
+	2	1180
+	3	824
+	4	2396
+	5	2266
+	6	2222
+	7	1314
+	8	1860
+	9	1548
+	10	2002
+	11	2458
+	12	2082
+	13	2406
+	14	1740
+	15	1012
+	16	884
+	17	1245
+	18	975
+	19	2262
+	20	1506
+	21	2258
+	22	2176
+	23	2112
+	24	1908
+	25	2422
+	26	1866
+	27	2354
+	28	2402
+	29	2262
+	30	2134
+	31	1020
+}
+
+@PE 1 {
+#	cost	n_interrupts	interrupt_time
+	58.0143	0	0
+
+#	type	exec_time
+	0	2304
+	1	1856
+	2	2360
+	3	1648
+	4	2396
+	5	2266
+	6	2222
+	7	1314
+	8	1860
+	9	1548
+	10	2002
+	11	2458
+	12	2082
+	13	2406
+	14	1740
+	15	2024
+	16	1768
+	17	2490
+	18	1950
+	19	2262
+	20	1506
+	21	2258
+	22	2176
+	23	2112
+	24	1908
+	25	2422
+	26	1866
+	27	2354
+	28	2402
+	29	2262
+	30	2134
+	31	1020
+}
+
+@PE 2 {
+#	cost	n_interrupts	interrupt_time
+	67.8244	0	0
+
+#	type	exec_time
+	0	2304
+	1	1856
+	2	2360
+	3	1648
+	4	1198
+	5	1133
+	6	1111
+	7	657
+	8	930
+	9	774
+	10	1001
+	11	1229
+	12	1041
+	13	1203
+	14	870
+	15	2024
+	16	1768
+	17	2490
+	18	1950
+	19	1131
+	20	753
+	21	1129
+	22	1088
+	23	1056
+	24	954
+	25	1211
+	26	933
+	27	1177
+	28	1201
+	29	1131
+	30	1067
+	31	510
+}
+
+# Known solution cost = 404.095
+# Here's the known solution with 4 PEs
+# Instance Name PEins-0  	--resource_index= 0
+#  t0_0 	start/end:	0 / 1152
+#  t0_1 	start/end:	1352 / 2280
+#  t1_2 	start/end:	2480 / 3492
+#  t1_3 	start/end:	3692 / 4576
+#  t0_4 	start/end:	4776 / 5956
+#  t1_5 	start/end:	6156 / 7401
+#  t0_6 	start/end:	7601 / 8425
+#  t1_7 	start/end:	8625 / 9600
+# Utilization = 85.4167%
+
+# Instance Name PEins-1  	--resource_index= 2
+#  t0_8 	start/end:	0 / 1198
+#  t1_9 	start/end:	1398 / 2529
+#  t0_10 	start/end:	2729 / 3862
+#  t1_11 	start/end:	4062 / 4815
+#  t1_12 	start/end:	5015 / 6144
+#  t1_13 	start/end:	6344 / 7432
+#  t0_14 	start/end:	7632 / 8743
+#  t0_15 	start/end:	8943 / 9600
+# Utilization = 85.4167%
+
+# Instance Name PEins-2  	--resource_index= 2
+#  t0_16 	start/end:	0 / 930
+#  t0_17 	start/end:	1130 / 1904
+#  t0_18 	start/end:	2104 / 3105
+#  t1_19 	start/end:	3305 / 4361
+#  t0_20 	start/end:	4561 / 5790
+#  t1_21 	start/end:	5990 / 6944
+#  t1_22 	start/end:	7144 / 8355
+#  t1_23 	start/end:	8555 / 9488
+# Utilization = 84.25%
+
+# Instance Name PEins-3  	--resource_index= 2
+#  t0_24 	start/end:	0 / 1041
+#  t1_25 	start/end:	1241 / 2418
+#  t1_26 	start/end:	2618 / 3819
+#  t0_27 	start/end:	4019 / 5222
+#  t1_28 	start/end:	5422 / 6553
+#  t0_29 	start/end:	6753 / 7623
+#  t1_30 	start/end:	7823 / 8890
+#  t1_31 	start/end:	9090 / 9600
+# Utilization = 85.4167%
+
+
+@COM 0 {
+#	cost	n_interrupts	interrupt_time	datarate	nconnects	code
+	116.11	0	0	129.304	8	2
+
+#	type	exec_time
+}
+
+# Here's the associated COM solution with 1 COMs
+# Instance Name COMins-0  	--resource_index= 0
+#  a0_5 	start/end:	2280 / 2369.8
+#  a0_7 	start/end:	5956 / 6291.2
+#  a0_8 	start/end:	6291.2 / 6821.56
+#  a0_9 	start/end:	8425 / 8528.6
+#  a0_10 	start/end:	2369.8 / 2851.04
+#  a0_15 	start/end:	3862 / 4001.8
+#  a0_21 	start/end:	2851.04 / 3053.23
+#  a0_22 	start/end:	3105 / 3256.4
+#  a0_23 	start/end:	4001.8 / 4392.64
+#  a0_24 	start/end:	5790 / 5823.2
+#  a1_32 	start/end:	4576 / 4663.8
+#  a1_34 	start/end:	7401 / 7605.8
+#  a1_35 	start/end:	7605.8 / 7649.24
+#  a1_36 	start/end:	3256.4 / 3343.52
+#  a1_37 	start/end:	4663.8 / 4889.04
+#  a1_41 	start/end:	4889.04 / 5069.23
+#  a1_43 	start/end:	6821.56 / 6886.05
+#  a1_44 	start/end:	7649.24 / 7804.39
+#  a1_45 	start/end:	7804.39 / 7928.51
+#  a1_46 	start/end:	8528.6 / 8640.88
+#  a1_47 	start/end:	4392.64 / 4429.31
+#  a1_48 	start/end:	5069.23 / 5213.39
+#  a1_51 	start/end:	6944 / 7035.4
+#  a1_52 	start/end:	7928.51 / 8027.81
+#  a1_53 	start/end:	8640.88 / 8730.7
+#  a1_54 	start/end:	3343.52 / 3413.22
+#  a1_55 	start/end:	3413.22 / 3502.97
+#  a1_56 	start/end:	3053.23 / 3063.59
+#  a1_57 	start/end:	3819 / 3827.6
+#  a1_58 	start/end:	5213.39 / 5328.71
+#  a1_59 	start/end:	5328.71 / 5420.97
+# Utilization = 47.8083%
+
+@ARCDATASIZETABLE 0 {
+#  type		data_size
+  0	25860
+  1	25860
+  2	25860
+  3	25860
+  4	25860
+  5	58057
+  6	25860
+  7	216713
+  8	342888
+  9	66979
+  10	311131
+  11	25860
+  12	25860
+  13	25860
+  14	25860
+  15	90383
+  16	25860
+  17	25860
+  18	25860
+  19	25860
+  20	25860
+  21	130721
+  22	97883
+  23	252685
+  24	21464
+  25	25860
+  26	25860
+  27	25860
+  28	25860
+  29	25860
+  30	25860
+  31	25860
+  32	56764
+  33	25860
+  34	132407
+  35	28084
+  36	56324
+  37	145622
+  38	25860
+  39	25860
+  40	25860
+  41	116497
+  42	25860
+  43	41692
+  44	100308
+  45	80247
+  46	72591
+  47	23709
+  48	93198
+  49	25860
+  50	25860
+  51	59091
+  52	64197
+  53	58072
+  54	45059
+  55	58029
+  56	6693
+  57	5560
+  58	74558
+  59	59646
+  60	25860
+}
+
+@TASK_GRAPH 0 {
+	PERIOD 9600
+
+	TASK t0_0	TYPE 0 
+	TASK t0_1	TYPE 1 
+	TASK t0_4	TYPE 4 
+	TASK t0_6	TYPE 6 
+	TASK t0_8	TYPE 8 
+	TASK t0_10	TYPE 10 
+	TASK t0_14	TYPE 14 
+	TASK t0_15	TYPE 15 
+	TASK t0_16	TYPE 16 
+	TASK t0_17	TYPE 17 
+	TASK t0_18	TYPE 18 
+	TASK t0_20	TYPE 20 
+	TASK t0_24	TYPE 24 
+	TASK t0_27	TYPE 27 
+	TASK t0_29	TYPE 29 
+
+	ARC a0_0 	FROM t0_0  TO  t0_1 TYPE 0
+	ARC a0_1 	FROM t0_0  TO  t0_2 TYPE 1
+	ARC a0_2 	FROM t0_0  TO  t0_3 TYPE 2
+	ARC a0_3 	FROM t0_1  TO  t0_2 TYPE 3
+	ARC a0_4 	FROM t0_1  TO  t0_3 TYPE 4
+	ARC a0_5 	FROM t0_1  TO  t0_5 TYPE 5
+	ARC a0_6 	FROM t0_2  TO  t0_3 TYPE 6
+	ARC a0_7 	FROM t0_2  TO  t0_6 TYPE 7
+	ARC a0_8 	FROM t0_2  TO  t0_7 TYPE 8
+	ARC a0_9 	FROM t0_3  TO  t0_7 TYPE 9
+	ARC a0_10 	FROM t0_4  TO  t0_2 TYPE 10
+	ARC a0_11 	FROM t0_4  TO  t0_5 TYPE 11
+	ARC a0_12 	FROM t0_4  TO  t0_6 TYPE 12
+	ARC a0_13 	FROM t0_5  TO  t0_6 TYPE 13
+	ARC a0_14 	FROM t0_5  TO  t0_7 TYPE 14
+	ARC a0_15 	FROM t0_5  TO  t0_11 TYPE 15
+	ARC a0_16 	FROM t0_8  TO  t0_9 TYPE 16
+	ARC a0_17 	FROM t0_8  TO  t0_10 TYPE 17
+	ARC a0_18 	FROM t0_8  TO  t0_11 TYPE 18
+	ARC a0_19 	FROM t0_9  TO  t0_10 TYPE 19
+	ARC a0_20 	FROM t0_9  TO  t0_11 TYPE 20
+	ARC a0_21 	FROM t0_9  TO  t0_13 TYPE 21
+	ARC a0_22 	FROM t0_10  TO  t0_13 TYPE 22
+	ARC a0_23 	FROM t0_10  TO  t0_14 TYPE 23
+	ARC a0_24 	FROM t0_11  TO  t0_14 TYPE 24
+	ARC a0_25 	FROM t0_12  TO  t0_13 TYPE 25
+	ARC a0_26 	FROM t0_12  TO  t0_14 TYPE 26
+
+	SOFT_DEADLINE d0_0 ON t_14 AT 8743
+	SOFT_DEADLINE d0_1 ON t_15 AT 9600
+	SOFT_DEADLINE d0_2 ON t_27 AT 5222
+	SOFT_DEADLINE d0_3 ON t_29 AT 7623
+}
+
+
+
+@TASK_GRAPH 1 {
+	PERIOD 9600
+
+	TASK t1_2	TYPE 2 
+	TASK t1_3	TYPE 3 
+	TASK t1_5	TYPE 5 
+	TASK t1_7	TYPE 7 
+	TASK t1_9	TYPE 9 
+	TASK t1_11	TYPE 11 
+	TASK t1_12	TYPE 12 
+	TASK t1_13	TYPE 13 
+	TASK t1_19	TYPE 19 
+	TASK t1_21	TYPE 21 
+	TASK t1_22	TYPE 22 
+	TASK t1_23	TYPE 23 
+	TASK t1_25	TYPE 25 
+	TASK t1_26	TYPE 26 
+	TASK t1_28	TYPE 28 
+	TASK t1_30	TYPE 30 
+	TASK t1_31	TYPE 31 
+
+	ARC a1_27 	FROM t1_0  TO  t1_1 TYPE 27
+	ARC a1_28 	FROM t1_0  TO  t1_2 TYPE 28
+	ARC a1_29 	FROM t1_0  TO  t1_3 TYPE 29
+	ARC a1_30 	FROM t1_1  TO  t1_2 TYPE 30
+	ARC a1_31 	FROM t1_1  TO  t1_3 TYPE 31
+	ARC a1_32 	FROM t1_1  TO  t1_6 TYPE 32
+	ARC a1_33 	FROM t1_2  TO  t1_3 TYPE 33
+	ARC a1_34 	FROM t1_2  TO  t1_11 TYPE 34
+	ARC a1_35 	FROM t1_2  TO  t1_15 TYPE 35
+	ARC a1_36 	FROM t1_4  TO  t1_1 TYPE 36
+	ARC a1_37 	FROM t1_4  TO  t1_2 TYPE 37
+	ARC a1_38 	FROM t1_4  TO  t1_5 TYPE 38
+	ARC a1_39 	FROM t1_5  TO  t1_6 TYPE 39
+	ARC a1_40 	FROM t1_5  TO  t1_7 TYPE 40
+	ARC a1_41 	FROM t1_5  TO  t1_9 TYPE 41
+	ARC a1_42 	FROM t1_6  TO  t1_7 TYPE 42
+	ARC a1_43 	FROM t1_6  TO  t1_10 TYPE 43
+	ARC a1_44 	FROM t1_6  TO  t1_11 TYPE 44
+	ARC a1_45 	FROM t1_7  TO  t1_11 TYPE 45
+	ARC a1_46 	FROM t1_7  TO  t1_16 TYPE 46
+	ARC a1_47 	FROM t1_8  TO  t1_6 TYPE 47
+	ARC a1_48 	FROM t1_8  TO  t1_7 TYPE 48
+	ARC a1_49 	FROM t1_8  TO  t1_9 TYPE 49
+	ARC a1_50 	FROM t1_9  TO  t1_10 TYPE 50
+	ARC a1_51 	FROM t1_9  TO  t1_15 TYPE 51
+	ARC a1_52 	FROM t1_9  TO  t1_16 TYPE 52
+	ARC a1_53 	FROM t1_10  TO  t1_16 TYPE 53
+	ARC a1_54 	FROM t1_12  TO  t1_1 TYPE 54
+	ARC a1_55 	FROM t1_12  TO  t1_5 TYPE 55
+	ARC a1_56 	FROM t1_12  TO  t1_8 TYPE 56
+	ARC a1_57 	FROM t1_13  TO  t1_5 TYPE 57
+	ARC a1_58 	FROM t1_13  TO  t1_9 TYPE 58
+	ARC a1_59 	FROM t1_13  TO  t1_10 TYPE 59
+	ARC a1_60 	FROM t1_14  TO  t1_15 TYPE 60
+
+	SOFT_DEADLINE d1_0 ON t_7 AT 9600
+	SOFT_DEADLINE d1_1 ON t_23 AT 9488
+	SOFT_DEADLINE d1_2 ON t_30 AT 8890
+	SOFT_DEADLINE d1_3 ON t_31 AT 9600
+}
+
+
+
+
+

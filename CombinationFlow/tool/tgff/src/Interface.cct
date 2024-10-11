@@ -1,0 +1,360 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename T>
+void PrintsBase<T, true, true>::print_to(std::ostream & os) const {
+	static_cast<const T *>(this)->print_to_default(os);
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+std::ostream &
+operator<<(std::ostream & os, const PrintsBase<T, true, PROVIDE> & p) {
+	static_cast<const T &>(p).print_to(os);
+	return os;
+}
+
+/*===========================================================================*/
+template <typename T>
+std::ostream &
+operator<<(std::ostream & os, const PrintsBase<T, true, false> & p) {
+	static_cast<const T &>(p).print_to(os);
+	return os;
+}
+
+/*===========================================================================*/
+template <typename InIter>
+void print_cont(InIter first, InIter last, std::ostream & os,
+const char * sep) {
+	while (first != last) {
+		os << *first;
+		first++;
+		if (first != last) {
+			os << sep;
+		}
+	}
+}
+
+/*===========================================================================*/
+template <typename Container>
+void print_cont(const Container & c, std::ostream & os, const char * sep) {
+	print_cont(c.begin(), c.end(), os, sep);
+}
+
+/*###########################################################################*/
+template <typename T>
+comp_type
+CompsBase<T, true, true>::comp(const T & b) const {
+	const T & aa = static_cast<const T &>(*this);
+	return aa.comp_default(b);
+}
+
+/*===========================================================================*/
+template <typename T>
+comp_type
+comp_obj<T>::operator()(const T & a, const T & b) const {
+	return comp(a, b);
+}
+
+/*===========================================================================*/
+template <typename T, bool COMPS_SELF>
+	struct comp_helper {};
+
+/*===========================================================================*/
+template <typename T>
+struct comp_helper<T, false> {
+	static comp_type comp(const T & a, const T & b) {
+		if (a < b) {
+			return LESS;
+		} else if (b < a) {
+			return GREATER;
+		} else {
+			return EQ;
+		}
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+struct comp_helper<T, true> {
+	static comp_type comp(const T & a, const T & b) {
+		return a.comp(b);
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+comp_type
+comp(const T & a, const T & b) {
+	return comp_helper<T, same_or_derived<T, CompsRoot>::result>::
+		comp(a, b);
+}
+
+/*===========================================================================*/
+template <typename I,
+typename comp_func<typename
+std::iterator_traits<I>::value_type>::func COMP> comp_type
+comp_cont(I first1, I last1, I first2, I last2) {
+	const typename std::iterator_traits<I>::difference_type sz1 = last1 - first1;
+	const typename std::iterator_traits<I>::difference_type sz2 = last2 - first2;
+
+	for (; first1 != last1 && first2 != last2; ++first1, ++first2) {
+		const comp_type cmp = (*COMP)(*first1, *first2);
+		if (cmp < 0) {
+			return LESS;
+		} else if (cmp > 0) {
+			return GREATER;
+		}
+	}
+
+	if (sz1 < sz2) {
+		return LESS;
+	} else if (sz2 < sz1) {
+		return GREATER;
+	}
+
+	return EQ;
+}
+
+/*===========================================================================*/
+template <typename I>
+comp_type
+comp_cont(I first1, I last1, I first2, I last2) {
+	return comp_cont<I, &comp<typename std::iterator_traits<I>::value_type> >(
+		first1, last1, first2, last2);
+}
+
+/*===========================================================================*/
+template <typename C>
+comp_type
+comp_cont(const C & c1, const C & c2) {
+	return comp_cont<typename C::const_iterator,
+		&comp<typename C::value_type> >(
+		c1.begin(), c1.end(), c2.begin(), c2.end());
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator<(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) < 0;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator<(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) < 0;
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator==(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return ! aa.comp(bb);
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator==(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return ! aa.comp(bb);
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator!=(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) != 0;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator!=(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) != 0;
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator>(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) > 0;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator>(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) > 0;
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator<=(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) <= 0;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator<=(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) <= 0;
+}
+
+/*===========================================================================*/
+template <typename T, bool PROVIDE>
+bool
+operator>=(const CompsBase<T, true, PROVIDE> & a,
+const CompsBase<T, true, PROVIDE> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) >= 0;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool
+operator>=(const CompsBase<T, true, false> & a,
+const CompsBase<T, true, false> & b) {
+	const T & aa = static_cast<const T &>(a);
+	const T & bb = static_cast<const T &>(b);
+	return aa.comp(bb) >= 0;
+}
+
+/*###########################################################################*/
+template <typename T, bool CLONES_SELF>
+	struct clone_helper {};
+
+/*===========================================================================*/
+template <typename T>
+struct clone_helper<T, false> {
+	static T * clone(const T & a) { return new T(a); }
+};
+
+/*===========================================================================*/
+template <typename T>
+struct clone_helper<T, true> {
+	static T * clone(const T & a) {
+		return static_cast<T *>(a.clone());
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+T *
+clone(const T & a) {
+	RASSERT(&a);
+	return clone_helper<T, same_or_derived<T, ClonesBase>::result>::clone(a);
+}
+
+/*###########################################################################*/
+template <typename T, bool SWAPS_SELF>
+	struct rswap_helper {};
+
+/*===========================================================================*/
+template <typename T>
+struct rswap_helper<T, false> {
+	static void rswap(T & a, T & b) {
+		const T tmp = a;
+		a = b;
+		b = tmp;
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+struct rswap_helper<T, true> {
+	static void rswap(T & a, T & b) {
+		typedef void (T::*SWP)(T &);
+		SWP swp = static_cast<SWP>(&T::rswap);
+		(a.*swp)(b);
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+void rswap(T & a, T & b) {
+	return rswap_helper<T, same_or_derived<T, SwapsBase>::result>::rswap(a, b);
+}
+
+/*###########################################################################*/
+template <typename T, bool SELF_CHECKS>
+	struct scheck_helper {};
+
+/*===========================================================================*/
+template <typename T>
+struct scheck_helper<T, false> {
+// Do nothing.
+	static void scheck_deep(const T &) {}
+};
+
+/*===========================================================================*/
+template <typename T>
+struct scheck_helper<T, true> {
+	typedef void (T::*SCD)() const;
+
+	static void scheck_deep(const T & a) {
+		SCD scd = &T::self_check_deep;
+		(a.*scd)();
+	}
+};
+
+/*===========================================================================*/
+template <typename T>
+SChecks<T>::~SChecks() {
+#if defined ROB_DEBUG
+	typedef void (T::*SCK)() const;
+	SCK sckd = &T::self_check_deep;
+	sckd = 0;
+	SCK sck = &T::self_check;
+	sck = 0;
+#endif
+}
+
+/*===========================================================================*/
+template <typename T>
+void try_scheck_deep(const T & a) {
+	return scheck_helper<T,
+		same_or_derived<T, SChecksBase>::result>::scheck_deep(a);
+}
+
+/*===========================================================================*/
+template <typename ITER>
+void map_self_check_deep(ITER begin, ITER end) {
+	for (; begin != end; ++begin) {
+		try_scheck_deep(*begin);
+	}
+}

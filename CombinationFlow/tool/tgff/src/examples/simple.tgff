@@ -1,0 +1,448 @@
+@HYPERPERIOD 1320
+
+@TASK_GRAPH 0 {
+	PERIOD 660
+
+	TASK t0_0	TYPE 18 
+	TASK t0_1	TYPE 2 
+	TASK t0_2	TYPE 13 
+	TASK t0_3	TYPE 12 
+	TASK t0_4	TYPE 4 
+	TASK t0_5	TYPE 19 
+	TASK t0_6	TYPE 4 
+	TASK t0_7	TYPE 16 
+	TASK t0_8	TYPE 0 
+	TASK t0_9	TYPE 10 
+	TASK t0_10	TYPE 6 
+	TASK t0_11	TYPE 14 
+
+	ARC a0_0 	FROM t0_0  TO  t0_1 TYPE 2
+	ARC a0_1 	FROM t0_0  TO  t0_2 TYPE 35
+	ARC a0_2 	FROM t0_1  TO  t0_3 TYPE 26
+	ARC a0_3 	FROM t0_2  TO  t0_3 TYPE 1
+	ARC a0_4 	FROM t0_2  TO  t0_4 TYPE 23
+	ARC a0_5 	FROM t0_3  TO  t0_4 TYPE 34
+	ARC a0_6 	FROM t0_1  TO  t0_4 TYPE 41
+	ARC a0_7 	FROM t0_4  TO  t0_5 TYPE 2
+	ARC a0_8 	FROM t0_4  TO  t0_6 TYPE 20
+	ARC a0_9 	FROM t0_6  TO  t0_7 TYPE 37
+	ARC a0_10 	FROM t0_3  TO  t0_7 TYPE 24
+	ARC a0_11 	FROM t0_5  TO  t0_7 TYPE 29
+	ARC a0_12 	FROM t0_7  TO  t0_8 TYPE 17
+	ARC a0_13 	FROM t0_8  TO  t0_9 TYPE 5
+	ARC a0_14 	FROM t0_8  TO  t0_10 TYPE 7
+	ARC a0_15 	FROM t0_7  TO  t0_10 TYPE 27
+	ARC a0_16 	FROM t0_9  TO  t0_11 TYPE 11
+	ARC a0_17 	FROM t0_6  TO  t0_11 TYPE 31
+	ARC a0_18 	FROM t0_10  TO  t0_11 TYPE 12
+
+	HARD_DEADLINE d0_0 ON t0_11 AT 900
+}
+
+
+@TASK_GRAPH 1 {
+	PERIOD 1320
+
+	TASK t1_0	TYPE 16 
+	TASK t1_1	TYPE 2 
+	TASK t1_2	TYPE 18 
+	TASK t1_3	TYPE 10 
+	TASK t1_4	TYPE 5 
+	TASK t1_5	TYPE 8 
+	TASK t1_6	TYPE 2 
+	TASK t1_7	TYPE 12 
+	TASK t1_8	TYPE 1 
+	TASK t1_9	TYPE 16 
+	TASK t1_10	TYPE 11 
+	TASK t1_11	TYPE 19 
+	TASK t1_12	TYPE 13 
+	TASK t1_13	TYPE 4 
+	TASK t1_14	TYPE 13 
+	TASK t1_15	TYPE 14 
+	TASK t1_16	TYPE 10 
+	TASK t1_17	TYPE 5 
+	TASK t1_18	TYPE 18 
+	TASK t1_19	TYPE 8 
+
+	ARC a1_0 	FROM t1_0  TO  t1_1 TYPE 26
+	ARC a1_1 	FROM t1_1  TO  t1_2 TYPE 30
+	ARC a1_2 	FROM t1_1  TO  t1_3 TYPE 37
+	ARC a1_3 	FROM t1_0  TO  t1_4 TYPE 1
+	ARC a1_4 	FROM t1_2  TO  t1_4 TYPE 3
+	ARC a1_5 	FROM t1_3  TO  t1_5 TYPE 37
+	ARC a1_6 	FROM t1_3  TO  t1_6 TYPE 6
+	ARC a1_7 	FROM t1_6  TO  t1_7 TYPE 11
+	ARC a1_8 	FROM t1_5  TO  t1_8 TYPE 7
+	ARC a1_9 	FROM t1_2  TO  t1_9 TYPE 22
+	ARC a1_10 	FROM t1_6  TO  t1_9 TYPE 5
+	ARC a1_11 	FROM t1_9  TO  t1_10 TYPE 30
+	ARC a1_12 	FROM t1_7  TO  t1_10 TYPE 15
+	ARC a1_13 	FROM t1_5  TO  t1_10 TYPE 23
+	ARC a1_14 	FROM t1_4  TO  t1_11 TYPE 48
+	ARC a1_15 	FROM t1_4  TO  t1_12 TYPE 46
+	ARC a1_16 	FROM t1_10  TO  t1_13 TYPE 25
+	ARC a1_17 	FROM t1_10  TO  t1_14 TYPE 17
+	ARC a1_18 	FROM t1_9  TO  t1_15 TYPE 29
+	ARC a1_19 	FROM t1_7  TO  t1_15 TYPE 44
+	ARC a1_20 	FROM t1_14  TO  t1_15 TYPE 5
+	ARC a1_21 	FROM t1_15  TO  t1_16 TYPE 47
+	ARC a1_22 	FROM t1_13  TO  t1_17 TYPE 33
+	ARC a1_23 	FROM t1_12  TO  t1_18 TYPE 36
+	ARC a1_24 	FROM t1_12  TO  t1_19 TYPE 12
+
+	HARD_DEADLINE d1_0 ON t1_8 AT 500
+	HARD_DEADLINE d1_1 ON t1_11 AT 500
+	HARD_DEADLINE d1_2 ON t1_16 AT 900
+	HARD_DEADLINE d1_3 ON t1_17 AT 800
+	HARD_DEADLINE d1_4 ON t1_18 AT 600
+	HARD_DEADLINE d1_5 ON t1_19 AT 600
+}
+
+
+@TASK_GRAPH 2 {
+	PERIOD 1320
+
+	TASK t2_0	TYPE 3 
+	TASK t2_1	TYPE 18 
+	TASK t2_2	TYPE 11 
+	TASK t2_3	TYPE 0 
+	TASK t2_4	TYPE 11 
+	TASK t2_5	TYPE 13 
+	TASK t2_6	TYPE 1 
+	TASK t2_7	TYPE 16 
+	TASK t2_8	TYPE 8 
+	TASK t2_9	TYPE 14 
+	TASK t2_10	TYPE 1 
+	TASK t2_11	TYPE 15 
+	TASK t2_12	TYPE 14 
+	TASK t2_13	TYPE 2 
+	TASK t2_14	TYPE 10 
+	TASK t2_15	TYPE 17 
+	TASK t2_16	TYPE 13 
+	TASK t2_17	TYPE 16 
+	TASK t2_18	TYPE 11 
+	TASK t2_19	TYPE 13 
+	TASK t2_20	TYPE 5 
+	TASK t2_21	TYPE 6 
+	TASK t2_22	TYPE 9 
+	TASK t2_23	TYPE 10 
+
+	ARC a2_0 	FROM t2_0  TO  t2_1 TYPE 17
+	ARC a2_1 	FROM t2_1  TO  t2_2 TYPE 30
+	ARC a2_2 	FROM t2_0  TO  t2_2 TYPE 28
+	ARC a2_3 	FROM t2_1  TO  t2_3 TYPE 46
+	ARC a2_4 	FROM t2_2  TO  t2_4 TYPE 39
+	ARC a2_5 	FROM t2_2  TO  t2_5 TYPE 30
+	ARC a2_6 	FROM t2_3  TO  t2_5 TYPE 40
+	ARC a2_7 	FROM t2_4  TO  t2_5 TYPE 0
+	ARC a2_8 	FROM t2_5  TO  t2_6 TYPE 16
+	ARC a2_9 	FROM t2_5  TO  t2_7 TYPE 10
+	ARC a2_10 	FROM t2_6  TO  t2_8 TYPE 29
+	ARC a2_11 	FROM t2_8  TO  t2_9 TYPE 10
+	ARC a2_12 	FROM t2_8  TO  t2_10 TYPE 35
+	ARC a2_13 	FROM t2_7  TO  t2_11 TYPE 3
+	ARC a2_14 	FROM t2_7  TO  t2_12 TYPE 32
+	ARC a2_15 	FROM t2_11  TO  t2_13 TYPE 41
+	ARC a2_16 	FROM t2_11  TO  t2_14 TYPE 39
+	ARC a2_17 	FROM t2_6  TO  t2_15 TYPE 49
+	ARC a2_18 	FROM t2_10  TO  t2_16 TYPE 23
+	ARC a2_19 	FROM t2_12  TO  t2_16 TYPE 16
+	ARC a2_20 	FROM t2_15  TO  t2_16 TYPE 10
+	ARC a2_21 	FROM t2_13  TO  t2_17 TYPE 21
+	ARC a2_22 	FROM t2_16  TO  t2_18 TYPE 13
+	ARC a2_23 	FROM t2_14  TO  t2_19 TYPE 18
+	ARC a2_24 	FROM t2_14  TO  t2_20 TYPE 43
+	ARC a2_25 	FROM t2_17  TO  t2_21 TYPE 10
+	ARC a2_26 	FROM t2_21  TO  t2_22 TYPE 45
+	ARC a2_27 	FROM t2_10  TO  t2_23 TYPE 13
+
+	HARD_DEADLINE d2_0 ON t2_9 AT 800
+	HARD_DEADLINE d2_1 ON t2_18 AT 1000
+	HARD_DEADLINE d2_2 ON t2_19 AT 900
+	HARD_DEADLINE d2_3 ON t2_20 AT 900
+	HARD_DEADLINE d2_4 ON t2_22 AT 1100
+	HARD_DEADLINE d2_5 ON t2_23 AT 900
+}
+
+
+@TASK_GRAPH 3 {
+	PERIOD 660
+
+	TASK t3_0	TYPE 3 
+	TASK t3_1	TYPE 5 
+	TASK t3_2	TYPE 10 
+	TASK t3_3	TYPE 8 
+	TASK t3_4	TYPE 11 
+	TASK t3_5	TYPE 7 
+	TASK t3_6	TYPE 5 
+	TASK t3_7	TYPE 5 
+	TASK t3_8	TYPE 16 
+	TASK t3_9	TYPE 3 
+	TASK t3_10	TYPE 11 
+
+	ARC a3_0 	FROM t3_0  TO  t3_1 TYPE 9
+	ARC a3_1 	FROM t3_1  TO  t3_2 TYPE 8
+	ARC a3_2 	FROM t3_0  TO  t3_3 TYPE 40
+	ARC a3_3 	FROM t3_1  TO  t3_3 TYPE 44
+	ARC a3_4 	FROM t3_2  TO  t3_4 TYPE 0
+	ARC a3_5 	FROM t3_4  TO  t3_5 TYPE 30
+	ARC a3_6 	FROM t3_3  TO  t3_5 TYPE 15
+	ARC a3_7 	FROM t3_5  TO  t3_6 TYPE 2
+	ARC a3_8 	FROM t3_6  TO  t3_7 TYPE 23
+	ARC a3_9 	FROM t3_6  TO  t3_8 TYPE 41
+	ARC a3_10 	FROM t3_8  TO  t3_9 TYPE 21
+	ARC a3_11 	FROM t3_8  TO  t3_10 TYPE 39
+
+	HARD_DEADLINE d3_0 ON t3_7 AT 700
+	HARD_DEADLINE d3_1 ON t3_9 AT 800
+	HARD_DEADLINE d3_2 ON t3_10 AT 800
+}
+
+
+@TASK_GRAPH 4 {
+	PERIOD 1320
+
+	TASK t4_0	TYPE 1 
+	TASK t4_1	TYPE 14 
+	TASK t4_2	TYPE 19 
+	TASK t4_3	TYPE 11 
+	TASK t4_4	TYPE 5 
+	TASK t4_5	TYPE 11 
+	TASK t4_6	TYPE 16 
+	TASK t4_7	TYPE 12 
+	TASK t4_8	TYPE 17 
+	TASK t4_9	TYPE 13 
+	TASK t4_10	TYPE 7 
+	TASK t4_11	TYPE 4 
+	TASK t4_12	TYPE 7 
+	TASK t4_13	TYPE 10 
+	TASK t4_14	TYPE 13 
+	TASK t4_15	TYPE 11 
+	TASK t4_16	TYPE 8 
+	TASK t4_17	TYPE 1 
+	TASK t4_18	TYPE 17 
+	TASK t4_19	TYPE 13 
+	TASK t4_20	TYPE 16 
+	TASK t4_21	TYPE 3 
+
+	ARC a4_0 	FROM t4_0  TO  t4_1 TYPE 28
+	ARC a4_1 	FROM t4_1  TO  t4_2 TYPE 5
+	ARC a4_2 	FROM t4_2  TO  t4_3 TYPE 7
+	ARC a4_3 	FROM t4_3  TO  t4_4 TYPE 45
+	ARC a4_4 	FROM t4_4  TO  t4_5 TYPE 15
+	ARC a4_5 	FROM t4_4  TO  t4_6 TYPE 8
+	ARC a4_6 	FROM t4_6  TO  t4_7 TYPE 14
+	ARC a4_7 	FROM t4_6  TO  t4_8 TYPE 3
+	ARC a4_8 	FROM t4_7  TO  t4_9 TYPE 38
+	ARC a4_9 	FROM t4_2  TO  t4_10 TYPE 47
+	ARC a4_10 	FROM t4_7  TO  t4_10 TYPE 18
+	ARC a4_11 	FROM t4_9  TO  t4_10 TYPE 13
+	ARC a4_12 	FROM t4_3  TO  t4_11 TYPE 3
+	ARC a4_13 	FROM t4_0  TO  t4_11 TYPE 30
+	ARC a4_14 	FROM t4_1  TO  t4_12 TYPE 43
+	ARC a4_15 	FROM t4_8  TO  t4_13 TYPE 47
+	ARC a4_16 	FROM t4_10  TO  t4_13 TYPE 46
+	ARC a4_17 	FROM t4_5  TO  t4_14 TYPE 15
+	ARC a4_18 	FROM t4_9  TO  t4_14 TYPE 34
+	ARC a4_19 	FROM t4_14  TO  t4_15 TYPE 2
+	ARC a4_20 	FROM t4_8  TO  t4_16 TYPE 15
+	ARC a4_21 	FROM t4_11  TO  t4_17 TYPE 2
+	ARC a4_22 	FROM t4_10  TO  t4_17 TYPE 42
+	ARC a4_23 	FROM t4_12  TO  t4_17 TYPE 9
+	ARC a4_24 	FROM t4_13  TO  t4_18 TYPE 16
+	ARC a4_25 	FROM t4_14  TO  t4_18 TYPE 44
+	ARC a4_26 	FROM t4_16  TO  t4_18 TYPE 20
+	ARC a4_27 	FROM t4_16  TO  t4_19 TYPE 17
+	ARC a4_28 	FROM t4_18  TO  t4_19 TYPE 1
+	ARC a4_29 	FROM t4_11  TO  t4_19 TYPE 25
+	ARC a4_30 	FROM t4_17  TO  t4_20 TYPE 18
+	ARC a4_31 	FROM t4_17  TO  t4_21 TYPE 44
+
+	HARD_DEADLINE d4_0 ON t4_15 AT 1000
+	HARD_DEADLINE d4_1 ON t4_19 AT 1200
+	HARD_DEADLINE d4_2 ON t4_20 AT 1100
+	HARD_DEADLINE d4_3 ON t4_21 AT 1100
+}
+
+
+
+
+@COMMUN 0 {
+#        price
+       70.1121
+
+#------------------------------------------------------------------------------
+# type    exec_time
+      0     47.4322
+      1     44.4722
+      2       67.19
+      3     31.1617
+      4     48.5905
+      5     31.4059
+      6     49.2837
+      7     57.9038
+      8     31.3118
+      9     52.8529
+     10     53.9596
+     11     38.2552
+     12      63.466
+     13     49.7124
+     14     34.8824
+     15     34.5833
+     16     62.8729
+     17      63.543
+     18     38.2502
+     19     65.7225
+     20     40.3073
+     21     61.3043
+     22     54.6837
+     23     41.3622
+     24     54.2479
+     25     31.5181
+     26     45.4552
+     27     44.6371
+     28     34.9778
+     29     58.9121
+     30     39.7029
+     31      38.468
+     32      33.567
+     33     41.5792
+     34     30.1373
+     35      56.374
+     36     39.3321
+     37     36.9511
+     38     42.6776
+     39     50.4804
+     40     46.8257
+     41     53.9914
+     42     55.7319
+     43     37.7169
+     44     65.5115
+     45     43.7001
+     46     32.0768
+     47     57.5419
+     48     63.1107
+     49     56.6932
+}
+
+
+@COMMUN 1 {
+#        price
+       71.4235
+
+#------------------------------------------------------------------------------
+# type    exec_time
+      0     48.5893
+      1     33.4384
+      2     34.2468
+      3     51.2027
+      4     51.3571
+      5     30.3827
+      6     43.3982
+      7     60.9097
+      8     36.0322
+      9     34.7446
+     10     45.3479
+     11     31.7221
+     12     49.6842
+     13     52.0635
+     14      44.769
+     15     37.7183
+     16     54.7523
+     17     58.4432
+     18     33.1266
+     19     48.2143
+     20     31.2946
+     21     45.9168
+     22     36.4521
+     23     61.6448
+     24     49.4966
+     25      37.113
+     26     40.1642
+     27     38.9454
+     28     41.6213
+     29     42.1084
+     30     42.4186
+     31     42.5145
+     32      34.418
+     33     33.4178
+     34     32.4243
+     35     63.7925
+     36      50.381
+     37      51.903
+     38     46.4714
+     39     35.0566
+     40     41.8399
+     41     30.1513
+     42     31.7449
+     43     57.3263
+     44     61.2321
+     45     44.9932
+     46      32.083
+     47     37.9489
+     48     62.4774
+     49       39.25
+}
+
+
+@COMMUN 2 {
+#        price
+        80.491
+
+#------------------------------------------------------------------------------
+# type    exec_time
+      0     59.8167
+      1     39.4463
+      2     41.4681
+      3     43.5444
+      4     49.8703
+      5     32.5656
+      6     58.0098
+      7     34.7729
+      8     37.0336
+      9     40.1461
+     10     42.6042
+     11     42.2486
+     12     60.8677
+     13     48.9577
+     14       34.34
+     15     34.0852
+     16     61.3326
+     17     56.9261
+     18     55.1187
+     19     51.4129
+     20     51.0462
+     21     44.9579
+     22     52.4628
+     23     51.0693
+     24     34.5953
+     25     42.1855
+     26     59.9996
+     27     42.6254
+     28     32.3599
+     29     54.6706
+     30     48.3314
+     31     45.0542
+     32     49.7026
+     33     50.7708
+     34     41.3317
+     35     47.2155
+     36     30.5908
+     37     42.1772
+     38     36.3321
+     39      30.622
+     40     34.3009
+     41     41.4616
+     42     37.5262
+     43      33.313
+     44     64.4565
+     45     33.6162
+     46     48.8002
+     47     40.2022
+     48     53.6196
+     49     46.5355
+}
+
+
+
+

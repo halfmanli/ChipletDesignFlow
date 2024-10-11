@@ -1,0 +1,117 @@
+----
+Introduction
+
+Please see ``TGFF: Task Graphs for Free'' by Robert Dick
+and David Rhodes in the 1998 Proceedings of the International
+Workshop Hardware/Software Codesign for more information.
+
+There is a link to the TGFF web page at
+http://ziyang.eecs.northwestern.edu/~dickrp/tools.html
+
+----
+Building and installing
+
+TGFF builds with GNU make and a recent version of GCC's C++
+compiler.  We use version 4.2.1.  Other makes and C++
+compilers may also work.  If you want to install TGFF in a
+shared directory, just copy the tgff file there and set the
+file permissions appropriately.
+
+----
+Getting Started
+
+Please see the enclosed example parameter files (.tgffopt suffix).
+When the tgff command is run without any arguments, it prints
+out information about the format of its parameters.  When
+run with an argument, X, it reads X.tgffopt and produces
+X.tgff and X.eps.
+
+
+----
+Release Notes
+
+TGFF has evolved since its beta release.  When possible, we have kept
+compatability with previous versions when adding new features.
+However, this hasn't always been possible.  Bugfixes have sometimes
+resulted in a change in TGFF output, given the same input as a
+previous version.  In order to make it easy for other researchers to
+produce your example sets, it is best to include the version of TGFF
+which you used, in addition to the TGFF parameters, when publishing an
+academic paper.  A brief description of changes to TGFF follows.
+
+----
+Release 3.6
+
+Minor updates to enable building with gcc 4.8.5.
+
+----
+Release 3.5
+
+Minor updates to make building with gcc 4.3 easier.
+Pavel Ghosh has donated a tgff2dot.pl perl script to convert from .tgff format
+to .dot graph format for plotting with graphviz.
+
+----
+Release 3.4
+
+This is an update to permit building with a recent gcc, e.g., version 4.2.1.
+
+----
+Release 3.0
+
+New features:
+
+Perhaps the biggest change in v3.0 is that the documentation and examples have
+been significantly improved. The examples have numerous comments explaining
+what several commands do. There is also documentation of all the features
+supported by v3.0.
+
+A new graph generation algorithm that is highly configurable. It can generate
+series-parallel graphs (groups of strings of nodes) as well as randomly
+connected graphs.
+
+VCG output is supported. 
+
+Multiple start nodes are supported. 
+
+Graphs can be labeled as periodic, aperiod, or a mix of the two. 
+
+Relative periods of graphs generated can be specified as decimals instead of
+integers.
+
+Changes to default behavior:
+
+The old algorithm should generate graphs that are slightly less connected. A
+bug in the previous version often resulted in maximal connectivity between a
+set of nodes.
+
+----
+Release 2.0
+
+--
+New features: 
+
+When TGFF combines multiple uniform random variables (URV) in order to
+produce table entries, the result is filtered to ensure that it is a
+URV, as well.  See flat_merge() in DBase.cc.
+
+Now supports hard and soft task deadlines.
+
+--
+Changes to default behavior:
+
+Defaults to filtering merged URVs in order to make the merged variable
+a URV as well.  You can get the pre-1.3 behavior, a simple weighted
+summation which results in a decreased variance, by putting
+'urv_merge false' in the options file.
+
+The default task graph period was awfully high.  It has been reduced.
+You can get the pre-1.3 behavior by putting '***' in the options file.
+
+--
+Critical loss of backward comparability:
+
+There was a bug which caused the periods of individual task graphs to
+increase as the number of task graphs increased.  This bug has been
+fixed.  Unfortunately, TGFF outputs will be different than they were
+in pre-1.3 TGFF versions.

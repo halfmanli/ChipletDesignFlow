@@ -1,0 +1,284 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+inline RawGraph::vertex_index RawGraph::size_vertex() const {
+	return vertex_.size();
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index RawGraph::size_edge() const {
+	return edge_.size();
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+RawGraph::vertex_offset(const_vertex_iterator x) const {
+	return x - vertex_.begin();
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+RawGraph::edge_offset(const_edge_iterator x) const {
+	return x - edge_.begin();
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+RawGraph::vertex_offset(const_reverse_vertex_iterator x) const {
+	return vertex_.rend() - x - 1;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+RawGraph::edge_offset(const_reverse_edge_iterator x) const {
+	return edge_.rend() - x - 1;
+}
+
+/*===========================================================================*/
+inline RawGraph::const_reverse_vertex_iterator
+RawGraph::vertex_rbegin() const {
+	return vertex_.rbegin();
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_iterator
+RawGraph::vertex(const vertex_index i) {
+	return vertex_.begin() + i;
+}
+
+/*===========================================================================*/
+inline RawGraph::const_vertex_iterator
+RawGraph::vertex(const vertex_index i) const {
+	return runconst(*this).vertex(i);
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_iterator
+RawGraph::edge(const edge_index i) {
+	return edge_.begin() + i;
+}
+
+/*===========================================================================*/
+inline RawGraph::const_edge_iterator
+RawGraph::edge(const edge_index i) const {
+	return runconst(*this).edge(i);
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_type::edge_type(const vertex_index from_i,
+const vertex_index to_i) :
+	from_(from_i),
+	to_(to_i)
+{}
+
+/*###########################################################################*/
+inline RawGraph::vertex_index
+RawGraph::vertex_index::operator++(int) {
+	vertex_index tmp(*this);
+	++index_;
+	return tmp;
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+RawGraph::vertex_index::operator--(int) {
+	vertex_index tmp(*this);
+	--index_;
+	return tmp;
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+RawGraph::vertex_index::operator+=(const vertex_index i) {
+	index_ += i.index_;
+	return *this;
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+RawGraph::vertex_index::operator-=(const vertex_index i) {
+	index_ -= i.index_;
+	return *this;
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+operator+(const RawGraph::vertex_index a,
+const RawGraph::vertex_index b) {
+	return RawGraph::vertex_index(a) += b;
+}
+
+/*===========================================================================*/
+inline RawGraph::vertex_index
+operator-(const RawGraph::vertex_index a,
+const RawGraph::vertex_index b) {
+	return RawGraph::vertex_index(a) -= b;
+}
+
+/*###########################################################################*/
+inline RawGraph::edge_index
+RawGraph::edge_index::operator++(int) {
+	edge_index tmp(*this);
+	++index_;
+	return tmp;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+RawGraph::edge_index::operator--(int) {
+	edge_index tmp(*this);
+	--index_;
+	return tmp;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+RawGraph::edge_index::operator+=(const edge_index i) {
+	index_ += i.index_;
+	return *this;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+RawGraph::edge_index::operator-=(const edge_index i) {
+	index_ -= i.index_;
+	return *this;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+operator+(const RawGraph::edge_index & a,
+const RawGraph::edge_index & b) {
+	return RawGraph::edge_index(a) += b;
+}
+
+/*===========================================================================*/
+inline RawGraph::edge_index
+operator-(const RawGraph::edge_index & a,
+const RawGraph::edge_index & b) {
+	return RawGraph::edge_index(a) -= b;
+}
+
+/*###########################################################################*/
+template <typename V, typename E>
+typename Graph<V, E>::vertex_index
+Graph<V, E>::add_vertex(const V & data) {
+	v_data_.push_back(data);
+	return super::add_vertex();
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+typename Graph<V, E>::edge_index
+Graph<V, E>::add_edge(vertex_index from, vertex_index to,
+const E & data) {
+	e_data_.push_back(data);
+	return super::add_edge(from, to);
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::erase_vertex(const vertex_index i) {
+	super::erase_vertex(i);
+	v_data_.erase(v_data_.begin() + i);
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::erase_edge(const edge_index i) {
+	super::erase_edge(i);
+	e_data_.erase(e_data_.begin() + i);
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::pack_memory() {
+	super::pack_memory();
+	RVector<V> v_data(v_data_);
+	RVector<E> e_data(e_data_);
+	v_data_.rswap(v_data);
+	e_data_.rswap(e_data);
+}
+
+/*===========================================================================*/
+template<typename V, typename E>
+void Graph<V, E>::clear() {
+	super::clear();
+	v_data_.clear();
+	e_data_.clear();
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::rswap(RawGraph & g) {
+	super::rswap(g);
+
+// This checks to make sure they're the same type.
+	
+	if (Graph * gg = dynamic_cast<Graph *>(&g)) {
+		v_data_.rswap(gg->v_data_);
+		e_data_.rswap(gg->e_data_);
+	}
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::self_check_deep() const {
+	self_check();
+	v_data_.self_check_deep();
+	e_data_.self_check_deep();
+}
+
+/*###########################################################################*/
+template <typename V, typename E>
+void Graph<V, E>::print_to_default(std::ostream & os) const {
+	super::print_to(os);
+
+	MAP(x, v_data_.size()) {
+		os << "vertex " << x << " data:\n" << v_data_[x] << "\n";
+	}
+
+	MAP(x, e_data_.size()) {
+		os << "edge " << x << " data:\n" << e_data_[x] << "\n";
+	}
+}
+
+/*===========================================================================*/
+template <typename V, typename E>
+void Graph<V, E>::print_to_vcg(std::ostream & os, const std::string & glab)
+const {
+	os << "graph: { label: \"" << glab <<
+		"\"\n\tdisplay_edge_labels: yes\n\n";
+
+	MAP(v, size_vertex()) {
+		os << "\tnode: { title: \"" << v << "\" label: \"";
+		print_if_possible(os, (*this)[v], "");
+		os << "\" ";
+
+		const_vertex_iterator vi = vertex(v);
+
+		if (! vi->size_in()) {
+			os << "color: lightgreen";
+		} else if (! vi->size_out()) {
+			os << "color: lightred";
+		} else {
+			os << "color: white";
+		}
+
+		os << " }\n";
+	}
+
+	os << "\n";
+
+	MAP(e, size_edge()) {
+		os << "\tedge: { thickness: 2 sourcename: \"";
+		print_if_possible(os, (*this)[edge(e)->from()], edge(e)->from());
+		os << "\" targetname: \"";
+		print_if_possible(os, (*this)[edge(e)->to()], edge(e)->to());
+		os << "\" " << "label: \"";
+		print_if_possible(os, (*this)(e), e);
+		os << "\" } \n";
+	}
+	os << "}\n";
+}

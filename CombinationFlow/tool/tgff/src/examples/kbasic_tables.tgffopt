@@ -1,0 +1,94 @@
+#---------------------------------------------
+# General example
+#---------------------------------------------
+# This example demonstrates basic table generation.  Specifically, it
+# demonstrates how tables generated for tasks are different from tables
+# generated for arcs.
+
+# Basic definitions
+period_mul 1
+task_degree 2 2
+tg_cnt 1
+task_cnt 20 1
+
+#---------------------------------------------
+# Set number of types for tasks and arcs
+#---------------------------------------------
+# Sets the number of task types
+task_type_cnt 8
+
+# Sets the number of arc types
+trans_type_cnt 4
+
+#---------------------------------------------
+# Define tables (NOTE: this table is for arcs)
+#---------------------------------------------
+# Number of tables
+table_cnt 1
+
+# Label the table
+table_label COMMUN_QUANT
+
+# Set attributes specifically for the table (none in this case)
+table_attrib
+
+# Set attributes for each arc type
+type_attrib quantity 10 6 1 1
+
+#--------------------------------------------
+# WRITE table to .tgff file
+#--------------------------------------------
+# Note a trans_write creates one type entry for each ARC type
+trans_write
+
+#--------------------------------------------
+# WRITE graph to output files
+#--------------------------------------------
+tg_write     # .tgff
+eps_write    # .eps
+vcg_write    # .vcg
+
+#---------------------------------------------
+# Define tables (NOTE: this table is for tasks)
+#---------------------------------------------
+table_cnt 3
+table_label CORE
+
+# Set attributes specifically for the table (price and area)
+table_attrib price 100 30, \
+	area 0.25 0.1 1 0
+
+# Set attributes for each arc type
+type_attrib cycles 1600 -1500 0.5 1
+
+#--------------------------------------------
+# WRITE table to .tgff file
+#--------------------------------------------
+# Note a pe_write creates one type entry for each TASK type
+pe_write
+
+#---------------------------------------------
+# Define additional tables
+#   NOTES: These tables are also for tasks
+#          You must WRITE the previous tables to the .tgff file before
+#              defining new tables or else the old definition will be ignored
+#---------------------------------------------
+table_cnt 3
+table_label ASIC
+
+# This allows you to continue naming tables sequentially even when
+# the table label and information changes
+table_offset ASIC 3
+
+table_attrib price 100 30, \
+	area 0.25 0.1 1 0
+
+# Note: a valid field has been added to this table
+type_attrib valid 0.75 0.35 1 1, \
+	cycles 1600 -1500 0.5 1
+
+
+pe_write
+
+
+

@@ -1,0 +1,185 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename Pair>
+bool
+equal_to_1st<Pair>::operator()(const Pair & a, const Pair & b) const {
+	return a.first == b.first;
+}
+
+/*===========================================================================*/
+template <typename Pair>
+bool
+less_1st<Pair>::operator()(const Pair & a, const Pair & b) const {
+	return a.first < b.first;
+}
+
+/*===========================================================================*/
+template <typename Pair>
+bool
+equal_to_2nd<Pair>::operator()(const Pair & a, const Pair & b) const {
+	return a.second == b.second;
+}
+
+/*===========================================================================*/
+template <typename Pair>
+bool
+less_2nd<Pair>::operator()(const Pair & a, const Pair & b) const {
+	return a.second < b.second;
+}
+
+/*===========================================================================*/
+template <typename Pair>
+const typename Pair::first_type &
+select1st<Pair>::operator()(const Pair & a) const {
+	return a.first;
+}
+
+template <typename Pair>
+const typename Pair::second_type &
+select2nd<Pair>::operator()(const Pair & a) const {
+	return a.second;
+}
+
+/*###########################################################################*/
+template <typename T1, typename T2, typename T3>
+Triple<T1, T2, T3>::Triple(const T1 & a, const T2 & b, const T3 & c) :
+	first(a),
+	second(b),
+	third(c)
+{}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3> template <typename TripleLike>
+Triple<T1, T2, T3>::Triple(const TripleLike & tl) :
+	first(tl.first),
+	second(tl.second),
+	third(tl.third)
+{}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3>
+void Triple<T1, T2, T3>::print_to(std::ostream & os) const {
+	os << "[" << first << " " << second << " " << third << "]";
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3>
+bool
+operator<(const Triple<T1, T2, T3> & x, const Triple<T1, T2, T3> & y) {
+	bool f_not_gr = ! (y.first < x.first);
+
+	return x.first < y.first ||
+		f_not_gr && x.second < y.second ||
+		f_not_gr && ! (y.second < x.second) && x.third < y.third;
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3>
+bool
+operator==(const Triple<T1, T2, T3> & x, const Triple<T1, T2, T3> & y) {
+	return x.first == y.first && x.second == y.second && x.third == y.third;
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3>
+Triple<T1, T2, T3> make_triple(const T1 & x, const T2 & y, const T3 & z) {
+	return Triple<T1, T2, T3>(x, y, z);
+}
+
+/*###########################################################################*/
+template <typename Triple>
+const typename Triple::third_type &
+select3rd<Triple>::operator()(const Triple & a) const {
+	return a.third;
+}
+
+/*===========================================================================*/
+template <typename Triple>
+bool
+equal_to_3rd<Triple>::operator()(const Triple & a, const Triple & b) const {
+	return a.third == b.third;
+}
+
+/*===========================================================================*/
+template <typename Triple>
+bool
+less_3rd<Triple>::operator()(const Triple & a, const Triple & b) const {
+	return a.third < b.third;
+}
+
+/*###########################################################################*/
+template <typename T1, typename T2, typename T3, typename T4>
+Quad<T1, T2, T3, T4>::Quad(const T1 & a, const T2 & b, const T3 & c,
+const T4 & d) :
+	first(a),
+	second(b),
+	third(c),
+	fourth(d)
+{}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3, typename T4>
+template <typename QuadLike>
+Quad<T1, T2, T3, T4>::Quad(const QuadLike & ql) :
+	first(ql.first),
+	second(ql.second),
+	third(ql.third),
+	fourth(ql.fourth)
+{}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3, typename T4>
+void Quad<T1, T2, T3, T4>::print_to(std::ostream & os) const {
+	return os << "[" << first << " " << second << " " << third <<
+	  " " << fourth << "]";
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3, typename T4>
+bool
+operator<(const Quad<T1, T2, T3, T4> & x, const Quad<T1, T2, T3, T4> & y) {
+	bool f_not_gr = ! (y.first < x.first);
+	bool s_not_gr = ! (y.second < x.second);
+
+	return x.first < y.first ||
+		f_not_gr && x.second < y.second ||
+		f_not_gr && s_not_gr && x.third < y.third ||
+		f_not_gr && s_not_gr &&	! (y.third < x.third) && x.fourth < y.fourth;
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3, typename T4>
+bool
+operator==(const Quad<T1, T2, T3, T4> & x, const Quad<T1, T2, T3, T4> & y) {
+	return x.first == y.first && x.second == y.second && x.third == y.third;
+}
+
+/*===========================================================================*/
+template <typename T1, typename T2, typename T3, typename T4>
+Quad<T1, T2, T3, T4> make_quad(const T1 & x, const T2 & y, const T3 & z,
+const T4 & p) {
+	return Quad<T1, T2, T3, T4>(x, y, z);
+}
+
+/*###########################################################################*/
+template <typename Quad>
+const typename Quad::fourth_type &
+select4th<Quad>::operator()(const Quad & a) const {
+	return a.fourth;
+}
+
+/*===========================================================================*/
+template <typename Quad>
+bool
+equal_to_4th<Quad>::operator()(const Quad & a, const Quad & b) const {
+	return a.fourth == b.fourth;
+}
+
+/*===========================================================================*/
+template <typename Quad>
+bool
+less_4th<Quad>::operator()(const Quad & a, const Quad & b) const {
+	return a.fourth < b.fourth;
+}

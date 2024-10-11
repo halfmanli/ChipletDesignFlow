@@ -1,0 +1,200 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <int N, typename T>
+FVector<N, T>::~FVector()
+{}
+
+/*===========================================================================*/
+template <int N, typename T>
+FVector<N, T>::FVector(const T & value) {
+	static_assert(N, "Length-zero FVector.");
+
+	MAP(x, N) {
+		data_[x] = value;
+	}
+	RDEBUG(self_check());
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+FVector<N, T>::FVector(const T & a, const T & b) {
+	static_assert(N == 2, "FVector length != 2.");
+	set_vec(begin(), a, b);
+	RDEBUG(self_check());
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+FVector<N, T>::FVector(const T & a, const T & b, const T & c) {
+	static_assert(N == 3, "FVector length != 3.");
+	set_vec(begin(), a, b, c);
+	RDEBUG(self_check());
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+FVector<N, T>::FVector(const T & a, const T & b, const T & c, const T & d) {
+	static_assert(N == 4, "FVector length != 4.");
+	set_vec(begin(), a, b, c, d);
+	RDEBUG(self_check());
+}
+
+/*===========================================================================*/
+template <int DIM, typename T>
+FVector<DIM, T> &
+FVector<DIM, T>::operator=(const self & a) {
+	register const T * term = data_ + DIM;
+	register T * i = data_;
+	register const T * j = a.data_;
+
+	for (; i < term; ++i, ++j) {
+		*i = *j;
+	}
+
+	RDEBUG(self_check());
+	return *this;
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+comp_type
+FVector<N, T>::comp_default(const self & b) const {
+	return comp_cont(*this, b);
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+void FVector<N, T>::rswap(FVector<N, T> & a) {
+	MAP(x, N) {
+		rstd::rswap((*this)[x], a[x]);
+	}
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+FVector<N, T> *
+FVector<N, T>::clone() const {
+	return new FVector<N, T>(*this);
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+typename FVector<N, T>::const_iterator
+FVector<N, T>::rbegin() const {
+	return const_reverse_iterator(data_ + N);
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+typename FVector<N, T>::const_iterator
+FVector<N, T>::rend() const {
+	return const_reverse_iterator(data_);
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+void FVector<N, T>::assign(size_type n, const T & val) {
+	RASSERT(n <= N);
+	for (T * i = data_; n; --n, ++i)
+		*i = val;
+}
+
+/*===========================================================================*/
+template <int N, typename T> template <typename InIter>
+void FVector<N, T>::assign(InIter first, InIter last) {
+	RASSERT(last - first == N);
+	for (T * i = data_; first != last; ++first, ++i)
+		*i = *first;
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+typename FVector<N, T>::reference
+FVector<N, T>::operator[](size_type x) {
+#ifdef ROB_DEBUG
+	if (x >= size() || x < 0) {
+		std::cerr << "For datatype " << typeid(*this).name() << ": size = " <<
+		  size() << ".  Reference = " << x << ".\n";
+		Rabort();
+	}
+#endif
+
+	return data_[x];
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+typename FVector<N, T>::const_reference
+FVector<N, T>::operator[](size_type x) const {
+	return runconst(*this)[x];
+}
+
+/*===========================================================================*/
+template <int N, typename T> template <typename InIter>
+FVector<N, T>::FVector(InIter first, InIter last) {
+	static_assert(N, "Zero-length FVector.");
+	RASSERT(last - first == N);
+	for (T * i = data_; first != last; ++first, ++i) {
+		*i = *first;
+	}
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+void FVector<N, T>::self_check_deep() const {
+	map_self_check_deep(begin(), end());
+}
+
+/*===========================================================================*/
+template <int N, typename T>
+void FVector<N, T>::print_to_default(std::ostream & os) const {
+	os << "[";
+	MAP(x, size()) {
+		os << (*this)[x];
+		if (x + 1 < size()) {
+			os << " ";
+		}
+	}
+	os << "]";
+}
+
+/*###########################################################################*/
+template <typename T>
+FVector<2, T>
+make_fvector(const T & a, const T & b) {
+	return FVector<2, T>(a, b);
+}
+
+/*===========================================================================*/
+template <typename T>
+FVector<3, T>
+make_fvector(const T & a, const T & b, const T & c) {
+	return FVector<3, T>(a, b, c);
+}
+
+/*===========================================================================*/
+template <typename T>
+FVector<4, T>
+make_fvector(const T & a, const T & b, const T & c, const T & d) {
+	return FVector<4, T>(a, b, c, d);
+}
+
+/*===========================================================================*/
+template <int DIM>
+bool
+increment(FVector<DIM, bool> & fv) {
+	long i = DIM - 1;
+
+	bool carry = false;
+	do {
+		RASSERT(i >= 0);
+		carry = fv[i];
+		fv[i] = ! fv[i];
+		--i;
+	} while (carry && i >= 0);
+
+	return ! carry || i >= 0;
+}
+

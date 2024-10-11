@@ -1,0 +1,164 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename T>
+bool eps_is_equal_to(const T & a, const T & b, const T & ref) {
+/* The constant is a little annoying.  It needs to allow enough
+fuzz for multiple operations. */
+
+	bool val = fabs(a - b) <=
+		std::max(ref, static_cast<T>(std::max(fabs(a), fabs(b)))) *
+		std::numeric_limits<T>::epsilon() * 512;
+#if 0
+	if (! val) {
+		Rassert(a != b);
+	}
+#endif
+	return val;
+}
+
+/*===========================================================================*/
+template <typename T>
+bool eps_is_less(const T & a, const T & b, const T & ref) {
+/* The constant is a little annoying.  It needs to allow enough
+fuzz for multiple operations. */
+	bool val = b - a > std::max(ref, std::max(fabs(a), fabs(b))) *
+		std::numeric_limits<T>::epsilon() * 512;
+#if 0
+	if (val) {
+		Rassert(a < b);
+	}
+#endif
+	return val;
+}
+
+/*###########################################################################*/
+template <typename T, int REF_EXP>
+eps_equal_to<T, REF_EXP>::eps_equal_to() :
+	ref_(static_cast<float>(pow(10.0, REF_EXP)))
+{}
+
+/*===========================================================================*/
+template <typename T, int REF_EXP>
+bool
+eps_equal_to<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return eps_is_equal_to(a, b, ref_);
+}
+
+/*###########################################################################*/
+template <typename T, int REF_EXP>
+eps_less<T, REF_EXP>::eps_less() :
+	ref_(pow(10.0, REF_EXP))
+{}
+
+/*===========================================================================*/
+template <typename T, int REF_EXP>
+bool
+eps_less<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return eps_is_less(a, b, ref_);
+}
+
+/*###########################################################################*/
+template <typename T, int REF_EXP>
+eps_not_equal_to<T, REF_EXP>::eps_not_equal_to() :
+	ref_(pow(10.0, REF_EXP))
+{}
+
+template <typename T, int REF_EXP>
+bool
+eps_not_equal_to<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return ! eps_is_equal_to(a, b, ref_);
+}
+
+/*===========================================================================*/
+template <typename T, int REF_EXP>
+eps_greater<T, REF_EXP>::eps_greater() :
+	ref_(pow(10.0, REF_EXP))
+{}
+
+template <typename T, int REF_EXP>
+bool
+eps_greater<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return eps_is_less(b, a, ref_);
+}
+
+/*===========================================================================*/
+template <typename T, int REF_EXP>
+eps_less_equal<T, REF_EXP>::eps_less_equal() :
+	ref_(pow(10.0, REF_EXP))
+{}
+
+template <typename T, int REF_EXP>
+bool
+eps_less_equal<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return ! eps_is_less(b, a, ref_);
+}
+
+/*===========================================================================*/
+template <typename T, int REF_EXP>
+eps_greater_equal<T, REF_EXP>::eps_greater_equal() :
+	ref_(pow(10.0, REF_EXP))
+{}
+
+template <typename T, int REF_EXP>
+bool
+eps_greater_equal<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	return ! eps_is_less(a, b, ref_);
+}
+
+/*###########################################################################*/
+template <typename T>
+eps_inc<T>::eps_inc(long step) :
+	step_(step * std::numeric_limits<T>::epsilon())
+{
+	RASSERT(step_ > 0);
+}
+
+/*===========================================================================*/
+template <typename T>
+void eps_inc<T>::operator()(T & a) const {
+	T simple_inc = a + fabs(a) * step_;
+
+	if (simple_inc <= a) {
+		simple_inc = a + std::numeric_limits<T>::min();
+	}
+
+	RASSERT(simple_inc > a);
+
+	a = simple_inc;
+}
+
+/*###########################################################################*/
+template <typename T>
+eps_dec<T>::eps_dec(long step) :
+	step_(step * std::numeric_limits<T>::epsilon())
+{
+	RASSERT(step_ > 0);
+}
+
+/*===========================================================================*/
+template <typename T>
+void eps_dec<T>::operator()(T & a) const {
+	T simple_dec = a - fabs(a) * step_;
+
+	if (simple_dec >= a) {
+		simple_dec = a - std::numeric_limits<T>::min();
+	}
+
+	RASSERT(simple_dec < a);
+	a = simple_dec;
+}
+
+/*###########################################################################*/
+template <typename T, int REF_EXP>
+comp_type
+eps_comp_obj<T, REF_EXP>::operator()(const T & a, const T & b) const {
+	if (lt_(a, b)) {
+		return LESS;
+	} else if (lt_(b, a)) {
+		return GREATER;
+	} else {
+		return EQ;
+	}
+}

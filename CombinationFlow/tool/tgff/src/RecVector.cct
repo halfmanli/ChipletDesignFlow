@@ -1,0 +1,291 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename T>
+RecVector2<T>::~RecVector2() {}
+
+/*===========================================================================*/
+template <typename T>
+RecVector2<T>::RecVector2(size_type sx, size_type sy, const T & value) :
+	impl_(sx * sy, value),
+	size_(sx, sy)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector2<T>::RecVector2(size_type sx, size_type sy) :
+	impl_(sx * sy),
+	size_(sx, sy)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector2<T> &
+RecVector2<T>::operator=(const self & a) {
+	impl_ = a.impl_;
+	size_ = a.size_;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector2<T>::resize(size_type x, size_type y, const T & val) {
+	if (size_[0] == x && size_[1] == y) {
+		return;
+	}
+
+	self tmp(x, y, val);
+	tmp.assign(0, 0, std::min(x, size_[0]),
+		std::min(y, size_[1]), *this);
+	rswap(tmp);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector2<T>::resize(size_type x, size_type y) {
+	resize(x, y, T());
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector2<T>::assign(size_type x_first, size_type y_first,
+size_type x_last, size_type y_last, const self & vec,
+size_type vec_x_first, size_type vec_y_first) {
+	resize(std::max(size()[0], x_last), std::max(size()[1], y_last));
+
+	MAP2(x, x_last - x_first, y, y_last - y_first) {
+		(*this)(x_first + x, y_first + y) =
+			vec(vec_x_first + x, vec_y_first + y);
+	}
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector2<T>::rswap(self &rv) {
+	impl_.rswap(rv.impl_);
+	size_.rswap(rv.size_);
+}
+
+/*===========================================================================*/
+template <typename T>
+inline T &
+RecVector2<T>::operator()(size_type a, size_type b) {
+#ifdef ROB_DEBUG
+	if (a >= size_[0] || a < 0 || b >= size_[1] || b < 0) {
+		std::cerr << "For datatype " << typeid(*this).name() << ", size: ";
+		size_.print_to_default(std::cerr);
+		std::cerr << ".  Reference_x = " << a << ", reference_y = " << b << "\n.";
+
+		Rabort();
+	}
+#endif
+
+	return impl_[a * size_[1] + b];
+}
+
+/*===========================================================================*/
+template <typename T>
+inline const T &
+RecVector2<T>::operator()(size_type a,
+size_type b) const {
+	return runconst(*this)(a, b);
+}
+
+/*###########################################################################*/
+template <typename T>
+RecVector3<T>::RecVector3(size_type sx, size_type sy, size_type sz,
+const T & value) :
+	impl_(sx * sy * sz, value),
+	size_(sx, sy, sz)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector3<T>::RecVector3(size_type sx, size_type sy, size_type sz) :
+	impl_(sx * sy * sz),
+	size_(sx, sy, sz)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector3<T> &
+RecVector3<T>::operator=(const self & a) {
+	impl_ = a.impl_;
+	size_ = a.size_;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector3<T>::rswap(self & rv) {
+	impl_.rswap(rv.impl_);
+	rstd::rswap(size_, rv.size_);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector3<T>::resize(size_type x, size_type y, size_type z,
+const T & val) {
+	if (size_[0] == x && size_[1] == y && size_[2] == z) {
+		return;
+	}
+
+	self tmp(x, y, z, val);
+	tmp.assign(0, 0, 0, std::min(size_[0], x),
+		std::min(size_[1], y),
+		std::min(size_[2], z), *this);
+	swap(tmp);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector3<T>::resize(size_type x, size_type y, size_type z) {
+	resize(x, y, z, T());
+}
+
+/*===========================================================================*/
+template <typename T>
+inline T &
+RecVector3<T>::operator()(size_type a, size_type b, size_type c) {
+#ifdef ROB_DEBUG
+	if (a >= size_[0] || a < 0 || b >= size_[1] || b < 0 ||
+		c >= size_[2] || c < 0)
+	{
+		std::cerr << "For datatype " << typeid(*this).name() << ", size: " <<
+		  size_ << ".  Reference_x = " << a << ", reference_y = " << b <<
+		  ", reference_z = " << c << ".\n";
+
+		Rabort();
+	}
+#endif
+
+	return impl_[a * size_[1] * size_[2] + b * size_[2] + c];
+}
+
+/*===========================================================================*/
+template <typename T>
+inline const T &
+RecVector3<T>::operator()(size_type a,
+	size_type b, size_type c) const
+{
+	return runconst(*this)(a, b, c);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector3<T>::assign(size_type x_first, size_type y_first,
+size_type z_first, size_type x_last, size_type y_last, size_type z_last,
+const self & vec, size_type vec_x_first, size_type vec_y_first,
+size_type vec_z_first) {
+	resize(std::max(size_[0], x_last), std::max(size_[1], y_last),
+		std::max(size_[2], z_last));
+
+	MAP3(x, x_last - x_first, y, y_last - y_first, z, z_last - z_first) {
+		(*this)(x_first + x, y_first + y, z_first + z) =
+			vec(vec_x_first + x, vec_y_first + y, vec_z_first + z);
+	}
+}
+
+/*###########################################################################*/
+template <typename T>
+RecVector4<T>::RecVector4(size_type sx, size_type sy, size_type sz,
+size_type sp, const T & value) :
+	impl_(sx * sy * sz * sp, value),
+	size_(sx, sy, sz, sp)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector4<T>::RecVector4(size_type sx, size_type sy, size_type sz,
+size_type sp) :
+	impl_(sx * sy * sz * sp),
+	size_(sx, sy, sz, sp)
+{}
+
+/*===========================================================================*/
+template <typename T>
+RecVector4<T> &
+RecVector4<T>::operator=(const self & a) {
+	impl_ = a.impl_;
+	size_ = a.size_;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector4<T>::rswap(self & a) {
+	impl_.rswap(a.impl_);
+	rswap(size_, a.size_);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector4<T>::resize(size_type x, size_type y, size_type z, size_type p,
+const T & val) {
+	if (size_[0] == x && size_[1] == y && size_[2] == z && size_[3] == p) {
+		return;
+	}
+
+	self tmp(x, y, z, p, val);
+	tmp.assign(0, 0, 0, std::min(size_[0], x),
+		std::min(size_[1], y),
+		std::min(size_[2], z),
+		std::min(size_[3], p), *this);
+	swap(tmp);
+}
+
+/*===========================================================================*/
+template <typename T>
+void
+RecVector4<T>::resize(size_type x, size_type y, size_type z, size_type p) {
+	resize(x, y, z, p, T());
+}
+
+/*===========================================================================*/
+template <typename T>
+inline T &
+RecVector4<T>::operator()(size_type a, size_type b, size_type c,
+size_type d) {
+#ifdef ROB_DEBUG
+	if (a >= size_[0] || a < 0 || b >= size_[1] || b < 0 ||
+		c >= size_[2] || c < 0 || d >= size_[3] || d < 0)
+	{
+		std::cerr << "For datatype " << typeid(*this).name() << ", size: " <<
+			size_ << ".  Reference_x = " << a << ", reference_y = " << b <<
+			", reference_z = " << c << ".\n";
+
+		Rabort();
+	}
+#endif
+
+	return impl_[a * size_[1] * size_[2] * size_[3] +
+		b * size_[2] * size_[3] + c * size_[3] + d];
+}
+
+/*===========================================================================*/
+template <typename T>
+inline const T &
+RecVector4<T>::operator()(size_type a, size_type b, size_type c,
+size_type d) const {
+	return runconst(*this)(a, b, c, d);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RecVector4<T>::assign(size_type x_first, size_type y_first,
+size_type x_last, size_type y_last, size_type z_first, size_type z_last,
+size_type p_first, size_type p_last, const self & vec,
+size_type vec_x_first, size_type vec_y_first, size_type vec_z_first,
+size_type vec_p_first) {
+	resize(std::max(size_[0], x_last), std::max(size_[1], y_last),
+		std::max(size_[2], z_last), std::max(size_[3], p_last));
+
+	MAP4(x, x_last - x_first, y, y_last - y_first, z, z_last - z_first,
+		p, p_last - p_first)
+	{
+		(*this)(x_first + x, y_first + y, z_first + z, p_first + p) =
+			vec(vec_x_first + x, vec_y_first + y, vec_z_first +
+			z, vec_p_first + p);
+	}
+}

@@ -1,0 +1,17 @@
+task_cnt 5 2
+trans_type_cnt 10
+
+eps_write
+tg_write
+pe_write
+
+table_label TRANS_MAGNITUDE
+table_cnt 1
+table_attrib
+type_attrib magnitude 80 40
+trans_write
+
+table_label COMMUN
+table_cnt 3
+table_attrib price 30 10, packet_size 10 3, packet_time 10 2
+misc_write

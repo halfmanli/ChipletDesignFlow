@@ -1,0 +1,75 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+#include "HolderPtr.h"
+
+/*###########################################################################*/
+template <typename T>
+HolderPtr<T>::HolderPtr(T * p) :
+	data_(p)
+{}
+
+/*===========================================================================*/
+template <typename T>
+HolderPtr<T>::HolderPtr(const self & a) :
+	Comps<self>(),
+	Clones<self>(),
+	Swaps<self>(),
+	data_(a.data_ ? rstd::clone(*a.data_) : 0)
+{}
+
+/*===========================================================================*/
+template <typename T> template <typename T2>
+HolderPtr<T>::HolderPtr(const HolderPtr<T2> & a):
+	data_(rstd::clone(a.data_))
+{}
+
+/*===========================================================================*/
+template <typename T>
+HolderPtr<T> &
+HolderPtr<T>::operator=(const self & a) {
+	T * new_data = a.data_ ? rstd::clone(*a.data_) : 0;
+	delete data_;
+	data_ = new_data;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T> template <class T2>
+HolderPtr<T> &
+HolderPtr<T>::operator=(const HolderPtr<T2> & a) {
+	T * new_data = clone(a.data_);
+	delete data_;
+	data_ = new_data;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T>
+HolderPtr<T>::~HolderPtr() {
+	delete data_;
+}
+
+/*===========================================================================*/
+template <typename T>
+comp_type
+HolderPtr<T>::comp(const self & a) const {
+	return data_ < a.data_ ? LESS :
+		data_ > a.data_ ? GREATER :
+		EQ;
+}
+
+/*===========================================================================*/
+template <typename T>
+T * HolderPtr<T>::release() {
+	T * tmp = data_;
+	data_ = 0;
+	return tmp;
+}
+
+/*===========================================================================*/
+template <typename T>
+void HolderPtr<T>::reset(T * p) {
+	delete data_;
+	data_ = p;
+}

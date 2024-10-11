@@ -1,0 +1,173 @@
+@HYPERPERIOD 700
+
+@COMMUN_QUANT 0 {
+# type    quantity
+      0          5
+      1          6
+      2         10
+      3          7
+}
+
+
+
+@TASK_GRAPH 0 {
+	PERIOD 700
+
+	TASK t0_0	TYPE 2 
+	TASK t0_1	TYPE 2 
+	TASK t0_2	TYPE 0 
+	TASK t0_3	TYPE 6 
+	TASK t0_4	TYPE 7 
+	TASK t0_5	TYPE 1 
+	TASK t0_6	TYPE 7 
+	TASK t0_7	TYPE 2 
+	TASK t0_8	TYPE 0 
+	TASK t0_9	TYPE 0 
+	TASK t0_10	TYPE 5 
+	TASK t0_11	TYPE 5 
+	TASK t0_12	TYPE 7 
+	TASK t0_13	TYPE 6 
+	TASK t0_14	TYPE 3 
+	TASK t0_15	TYPE 5 
+	TASK t0_16	TYPE 1 
+	TASK t0_17	TYPE 0 
+	TASK t0_18	TYPE 3 
+
+	ARC a0_0 	FROM t0_0  TO  t0_1 TYPE 2
+	ARC a0_1 	FROM t0_1  TO  t0_2 TYPE 0
+	ARC a0_2 	FROM t0_0  TO  t0_3 TYPE 1
+	ARC a0_3 	FROM t0_2  TO  t0_4 TYPE 1
+	ARC a0_4 	FROM t0_3  TO  t0_5 TYPE 0
+	ARC a0_5 	FROM t0_3  TO  t0_6 TYPE 2
+	ARC a0_6 	FROM t0_1  TO  t0_7 TYPE 2
+	ARC a0_7 	FROM t0_7  TO  t0_8 TYPE 3
+	ARC a0_8 	FROM t0_7  TO  t0_9 TYPE 2
+	ARC a0_9 	FROM t0_2  TO  t0_10 TYPE 2
+	ARC a0_10 	FROM t0_6  TO  t0_10 TYPE 2
+	ARC a0_11 	FROM t0_6  TO  t0_11 TYPE 2
+	ARC a0_12 	FROM t0_4  TO  t0_11 TYPE 3
+	ARC a0_13 	FROM t0_5  TO  t0_12 TYPE 3
+	ARC a0_14 	FROM t0_10  TO  t0_13 TYPE 2
+	ARC a0_15 	FROM t0_10  TO  t0_14 TYPE 0
+	ARC a0_16 	FROM t0_11  TO  t0_15 TYPE 2
+	ARC a0_17 	FROM t0_5  TO  t0_15 TYPE 1
+	ARC a0_18 	FROM t0_15  TO  t0_16 TYPE 3
+	ARC a0_19 	FROM t0_9  TO  t0_17 TYPE 0
+	ARC a0_20 	FROM t0_14  TO  t0_18 TYPE 1
+
+	HARD_DEADLINE d0_0 ON t0_8 AT 400
+	HARD_DEADLINE d0_1 ON t0_12 AT 400
+	HARD_DEADLINE d0_2 ON t0_13 AT 500
+	HARD_DEADLINE d0_3 ON t0_16 AT 700
+	HARD_DEADLINE d0_4 ON t0_17 AT 500
+	HARD_DEADLINE d0_5 ON t0_18 AT 600
+}
+
+
+
+
+@CORE 0 {
+# price   area
+  81.2841 0.219023
+
+#------------------------------------------------------------------------------
+# type version cycles
+  0    0       2641
+  1    0       2013
+  2    0       427
+  3    0       1849
+  4    0       1561
+  5    0       3064
+  6    0       1221
+  7    0       867
+}
+
+
+@CORE 1 {
+# price   area
+  96.5297 0.166029
+
+#------------------------------------------------------------------------------
+# type version cycles
+  0    0       1612
+  1    0       2972
+  2    0       735
+  3    0       2977
+  4    0       2888
+  5    0       2901
+  6    0       2232
+  7    0       2229
+}
+
+
+@CORE 2 {
+# price   area
+  109.21  0.185649
+
+#------------------------------------------------------------------------------
+# type version cycles
+  0    0       743
+  1    0       2310
+  2    0       1165
+  3    0       2456
+  4    0       1607
+  5    0       1677
+  6    0       1177
+  7    0       1029
+}
+
+
+
+@ASIC 3 {
+# price   area
+  81.2841 0.219023
+
+#------------------------------------------------------------------------------
+# type version valid   cycles
+  0    0       1       735
+  1    0       1       1258
+  2    0       1       417
+  3    0       1       3063
+  4    0       1       2092
+  5    0       1       1961
+  6    0       1       2831
+  7    0       1       2002
+}
+
+
+@ASIC 4 {
+# price   area
+  96.5297 0.166029
+
+#------------------------------------------------------------------------------
+# type version valid   cycles
+  0    0       1       2194
+  1    0       0       2443
+  2    0       1       2145
+  3    0       0       2489
+  4    0       0       1804
+  5    0       0       1899
+  6    0       1       1135
+  7    0       1       1250
+}
+
+
+@ASIC 5 {
+# price   area
+  109.21  0.185649
+
+#------------------------------------------------------------------------------
+# type version valid   cycles
+  0    0       1       2773
+  1    0       0       2116
+  2    0       1       2646
+  3    0       0       2153
+  4    0       1       2801
+  5    0       0       2747
+  6    0       1       2526
+  7    0       1       1672
+}
+
+
+
+

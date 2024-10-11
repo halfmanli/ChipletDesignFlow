@@ -1,0 +1,75 @@
+task_trans_time 350000
+period_mul 1, 2
+
+tg_cnt 3
+task_cnt 10 3
+task_type_cnt 4
+trans_type_cnt 8
+
+table_cnt 1
+table_label COMMUN_QUANT
+table_attrib
+type_attrib quantity 100 80
+trans_write
+
+tg_write
+eps_write
+
+# Exec and switch time are in us. Memory load is in K.
+table_cnt 3
+table_label PROC
+table_attrib price 20 10, asynchronous 0.75 0.31
+type_attrib  exec_time 300000 285000, switch_time 1500 1425, \
+  mem_load 256 128
+pe_write
+
+# Unit time is in us per K.
+table_cnt 3
+table_label COMMUN
+table_attrib price 100 50, unit_time 50 43, contacts 5 3
+misc_write
+
+# 6200 series.
+table_cnt 1
+table_label FPGA_FAMILY
+table_attrib mem_per_device 0.0009765625 0 0.5 0
+type_attrib exec_time 20000 19000, devices 2000 1970
+pe_write
+
+# Speed Grade -2
+# 6216
+table_cnt 1
+table_label FPGA
+table_attrib price 14 0, devices 4096 0, exec_time_mul 1 0 0.5 0, \
+  config_time_mul 0.005 0 0.5 0
+misc_write
+
+# 6264
+table_cnt 1
+table_label FPGA
+table_attrib price 26 0, devices 16384 0, exec_time_mul 1 0 0.5 0, \
+  config_time_mul 0.005 0 0.5 0
+misc_write
+
+# Speed Grade -3
+# 6216
+table_cnt 1
+table_label FPGA
+table_attrib price 10 0, devices 4096 0, exec_time_mul 0.87 0 0.5 0, \
+  config_time_mul 0.0043 0 0.5 0
+misc_write
+
+# 6264
+table_cnt 1
+table_label FPGA
+table_attrib price 23 0, devices 16384 0, exec_time_mul 0.87 0 0.5 0, \
+  config_time_mul 0.0043 0 0.5 0
+misc_write
+
+# Price per K.
+table_cnt 1
+table_label MEMORY
+table_attrib price 0.0031 0.001 0.5 0
+misc_write
+
+

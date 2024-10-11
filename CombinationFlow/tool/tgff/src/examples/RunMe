@@ -1,0 +1,13 @@
+#!/bin/sh
+
+../tgff bus
+../tgff creds1
+../tgff kbasic_tables
+../tgff kbasic_task
+../tgff kextended
+../tgff kseries_parallel
+../tgff kseries_parallel_xover
+../tgff packed
+../tgff packets
+../tgff simple
+

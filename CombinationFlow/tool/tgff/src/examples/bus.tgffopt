@@ -1,0 +1,5 @@
+note_write		#test note write
+#
+task_degree		4 4
+pack_schedule	2 10 1000 500 200 1.0 4 4 2 1 
+#	^ command generates eps file by default!

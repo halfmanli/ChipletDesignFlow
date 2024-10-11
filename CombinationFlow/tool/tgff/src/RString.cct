@@ -1,0 +1,24 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*===========================================================================*/
+inline bool
+insen_less<char>::operator()(const char & a, const char & b) const {
+	return tolower(a) < tolower(b);
+}
+
+/*===========================================================================*/
+inline bool
+insen_equal_to<char>::operator()(const char & a, const char & b) const {
+	return tolower(a) == tolower(b);
+}
+
+/*===========================================================================*/
+template <typename T>
+std::string
+to_string(const T & a) {
+	std::stringstream ss;
+	ss << a;
+	std::string str(ss.str());
+	return str;
+}

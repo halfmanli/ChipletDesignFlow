@@ -1,0 +1,40 @@
+# Seed value for random generator
+seed 1
+
+# 2 types of task graphs (one is about 2x as many NODES)
+period_mul 1, 2
+
+# Period must be greater than deadline
+period_g_deadline 1
+
+# Ratio period/deadline (must be >1 if "period_g_deadline" is true)
+period_laxity 1
+
+# Number of task graphs = 3
+tg_cnt 10
+
+# Sets maximum 'in degree' and 'out degree' for each node 
+# (to 2 and 3, repectively)
+task_degree 2 3
+
+# Average 25 tasks per graph  (+/- 10 tasks)
+# (This number of tasks is then multiplied by the 'period_mul' value for
+# that particular graph)
+task_cnt 25 10
+
+# Specifies that each task should have a unique number for it's type
+# Note the following 2 lines are equivalent:
+task_unique 1
+task_unique
+
+#-------------------------------------------------
+# Output commands
+#-------------------------------------------------
+# Write the task graphs specified so far to .tgff file
+tg_write
+
+# Write the task graphs specified so far to .eps file
+eps_write
+
+# Write the task graphs specified so far to .vcg file
+vcg_write

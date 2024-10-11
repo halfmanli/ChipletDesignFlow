@@ -1,0 +1,69 @@
+graph: { label: "kbasic_tables.vcg"
+display_edge_labels: yes
+	node: { title: "t0_0" label: "t0_0 (2)"  color: lightgreen } 
+	node: { title: "t0_1" label: "t0_1 (2)"  color: white } 
+	node: { title: "t0_2" label: "t0_2 (0)"  color: white } 
+	node: { title: "t0_3" label: "t0_3 (6)"  color: white } 
+	node: { title: "t0_4" label: "t0_4 (7)"  color: white } 
+	node: { title: "t0_5" label: "t0_5 (1)"  color: white } 
+	node: { title: "t0_6" label: "t0_6 (7)"  color: white } 
+	node: { title: "t0_7" label: "t0_7 (2)"  color: white } 
+	node: { title: "t0_8" label: "t0_8 (0)"  color: lightred } 
+	node: { title: "t0_9" label: "t0_9 (0)"  color: white } 
+	node: { title: "t0_10" label: "t0_10 (5)"  color: white } 
+	node: { title: "t0_11" label: "t0_11 (5)"  color: white } 
+	node: { title: "t0_12" label: "t0_12 (7)"  color: lightred } 
+	node: { title: "t0_13" label: "t0_13 (6)"  color: lightred } 
+	node: { title: "t0_14" label: "t0_14 (3)"  color: white } 
+	node: { title: "t0_15" label: "t0_15 (5)"  color: white } 
+	node: { title: "t0_16" label: "t0_16 (1)"  color: lightred } 
+	node: { title: "t0_17" label: "t0_17 (0)"  color: lightred } 
+	node: { title: "t0_18" label: "t0_18 (3)"  color: lightred } 
+
+	edge: { thickness: 2 sourcename:"t0_0" targetname: "t0_1"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_1" targetname: "t0_2"  label: "(0)" } 
+
+	edge: { thickness: 2 sourcename:"t0_0" targetname: "t0_3"  label: "(1)" } 
+
+	edge: { thickness: 2 sourcename:"t0_2" targetname: "t0_4"  label: "(1)" } 
+
+	edge: { thickness: 2 sourcename:"t0_3" targetname: "t0_5"  label: "(0)" } 
+
+	edge: { thickness: 2 sourcename:"t0_3" targetname: "t0_6"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_1" targetname: "t0_7"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_7" targetname: "t0_8"  label: "(3)" } 
+
+	edge: { thickness: 2 sourcename:"t0_7" targetname: "t0_9"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_2" targetname: "t0_10"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_6" targetname: "t0_10"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_6" targetname: "t0_11"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_4" targetname: "t0_11"  label: "(3)" } 
+
+	edge: { thickness: 2 sourcename:"t0_5" targetname: "t0_12"  label: "(3)" } 
+
+	edge: { thickness: 2 sourcename:"t0_10" targetname: "t0_13"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_10" targetname: "t0_14"  label: "(0)" } 
+
+	edge: { thickness: 2 sourcename:"t0_11" targetname: "t0_15"  label: "(2)" } 
+
+	edge: { thickness: 2 sourcename:"t0_5" targetname: "t0_15"  label: "(1)" } 
+
+	edge: { thickness: 2 sourcename:"t0_15" targetname: "t0_16"  label: "(3)" } 
+
+	edge: { thickness: 2 sourcename:"t0_9" targetname: "t0_17"  label: "(0)" } 
+
+	edge: { thickness: 2 sourcename:"t0_14" targetname: "t0_18"  label: "(1)" } 
+
+
+
+
+
+ } 

@@ -1,0 +1,14 @@
+% Put run-time parameter changes here.
+%
+% PARAMETER = value
+% whether ouput file
+OUTPUT_ASSIGN = TRUE
+% print vertices of ervery set
+OUT_ASSIGN_INV = TRUE
+% If mapping isn't important in your application you can use ARCHITECTURE
+% to specify a one dimensional mesh and simply enter the number of sets you require
+ARCHITECTURE = 1
+% If the value of KL METRIC is one then all edges crossing between two sets are treated the same
+KL_METRIC = 1
+% increase the number of vertices that have no edges connecting them to other sets
+INTERNAL_VERTICES = TRUE

@@ -1,0 +1,423 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+#include "RVector.h"
+
+/*###########################################################################*/
+template <typename T, typename FUNC, typename EQ>
+std::pair<SearchHalt, T>
+chop_search(T target, const T start_low, const T start_high, FUNC func,
+EQ eq, const T precision, long timeout) {
+	T low = start_low;
+	T high = start_high;
+
+	T func_low = func(low);
+	T func_high = func(high);
+	const T full_range = func_high - func_low;
+
+	RASSERT(func_low <= func_high);
+
+	if (func_low < target && func_high < target) {
+		return std::make_pair(SearchHalt::RANGE_LOW, high);
+	} else if (func_low > target && func_high > target) {
+		return std::make_pair(SearchHalt::RANGE_HIGH, low);
+	}
+
+	std::pair<SearchHalt, T> ret;
+
+	T mid = (low + high) / 2.0;
+
+	while (1) {
+		T func_mid = func(mid);
+
+		if (! timeout) {
+			ret = std::make_pair(SearchHalt::TIMEOUT, mid);
+			break;
+		}
+
+		if (target == func_mid) {
+			ret = std::make_pair(SearchHalt::MATCH, mid);
+			break;
+		} else if (func_low > func_mid ||
+			func_mid > func_high ||
+			func_low > target ||
+			target > func_high)
+		{
+			ret = std::make_pair(SearchHalt::NOISE, mid);
+			break;
+		}
+
+		if (func_mid < target) {
+			if (eq(low, mid)) {
+				ret = std::make_pair(SearchHalt::MATCH, mid);
+				break;
+			}
+			low = mid;
+			func_low = func_mid;
+		} else {
+			if (eq(high, mid)) {
+				ret = std::make_pair(SearchHalt::MATCH, mid);
+				break;
+			}
+			high = mid;
+			func_high = func_mid;
+		}
+
+		mid = (low + high) / 2.0;
+		--timeout;
+	}
+
+	if (std::abs((func(ret.second) - target) * full_range) < precision) {
+		ret.first |= SearchHalt::GOOD;
+	}
+
+	return ret;
+}
+
+/*===========================================================================*/
+template <typename T, typename FUNC>
+std::pair<SearchHalt, long>
+int_chop_search(T target, long low, long high, FUNC func, const T precision) {
+	T func_low = func(low);
+	T func_high = func(high);
+
+	const T full_range = func_high - func_low;
+
+	RASSERT(func_low < func_high);
+
+	if (func_low < target && func_high < target) {
+		return std::make_pair(SearchHalt::RANGE_LOW, high);
+	} else if (func_low > target && func_high > target) {
+		return std::make_pair(SearchHalt::RANGE_HIGH, low);
+	}
+
+	long mid = (low + high) / 2;
+
+	while (1) {
+		long dif = high - low;
+
+		if (dif >= 0 && dif <= 1 || dif <= 0 && dif >= -1) {
+			break;
+		}
+
+		T func_mid = func(mid);
+
+		RASSERT(func_low <= func_mid);
+		RASSERT(func_mid <= func_high);
+		RASSERT(func_low <= target);
+		RASSERT(func_high >= target);
+
+		if (func_mid < target) {
+			low = mid;
+			func_low = func_mid;
+		} else {
+			high = mid;
+			func_high = func_mid;
+		}
+		
+		mid = (low + high) / 2;
+	}
+
+	T low_dif = target - func(low);
+	T high_dif = func(high) - target;
+
+	RASSERT(low_dif >= 0.0);
+	RASSERT(high_dif >= 0.0);
+
+	std::pair<SearchHalt, long> ret;
+
+	if (low_dif < high_dif) {
+		ret = std::make_pair(SearchHalt::MATCH, low);
+	} else {
+		ret = std::make_pair(SearchHalt::MATCH, high);
+	}
+
+	if (std::abs(func(ret.second) - target) < full_range / precision) {
+		ret.first |= SearchHalt::GOOD;
+	}
+
+	return ret;
+}
+
+/*===========================================================================*/
+template <typename T, typename FUNC, typename INC>
+T
+deriv(T x, FUNC func, INC inc) {
+	T xp = inc(x);
+	T y = func(x);
+	T yp = func(xp);
+	return (yp - y) / (xp - x);
+}
+
+/*===========================================================================*/
+// SGI extension
+template<typename I, typename T>
+void iota(I first, I last, T value) {
+	while (first != last) {
+		*first++ = value++;
+	}
+}
+
+/*===========================================================================*/
+// SGI extension
+template<typename I, typename O, typename D>
+O random_sample_n(I first, I last, O out, const D n) {
+	D rem = std::distance(first, last);
+   D m = std::min(n, rem);
+
+	while (m > 0) {
+		if (std::rand(rem) < m) {
+			*out = *first;
+			++out;
+			--m;
+		}
+	}
+}
+
+/*===========================================================================*/
+// SGI extension
+template<typename I, typename O, typename D, typename G>
+O random_sample_n(I first, I last, O out, const D n, G gen) {
+	D rem = std::distance(first, last);
+	D m = std::min(n, rem);
+
+	while (m > 0) {
+		if (gen(rem) < m) {
+			*out = *first;
+			++out;
+			--m;
+		}
+
+		--rem;
+		++first;
+	}
+	return out;
+}
+
+/*===========================================================================*/
+template <typename Pair>
+struct less_1st_ref : public rbinary_function<Pair, Pair, bool> {
+	bool operator()(const Pair & x, const Pair & y) const
+		{ return *(x.first) < *(y.first); }
+}; 
+
+// Puts indexes of elements in [begin, end), in increasing order, to dest.
+template <typename InIter, typename OutIter>
+OutIter
+pri_map(InIter begin, const InIter end, OutIter dest) {
+	typedef std::pair<InIter, long> PriPair;
+
+	size_t sz = std::distance(begin, end);
+
+	RVector<PriPair> pair_vec(sz);
+
+	for (size_t x = 0; begin < end; ++x, ++begin)
+		pair_vec[x] = std::make_pair(begin, x);
+
+	std::sort(pair_vec.begin(), pair_vec.end(), less_1st_ref<PriPair>());
+
+	for (size_t x = 0; x < sz; ++x, ++dest)
+		*dest = pair_vec[x].second;
+
+	return dest;
+}
+
+/*###########################################################################*/
+template <typename C1, typename C2, typename T>
+void resize_from(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size(), value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize_from(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2, typename T>
+void resize2_from(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		c1[x].resize(c2[x].size(), value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize2_from(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		c1[x].resize(c2[x].size());
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2, typename T>
+void resize3_from(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		resize2_from(c1[x], c2[x], value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize3_from(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		resize2_from(c1[x], c2[x]);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2, typename T>
+void resize4_from(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		resize3_from(c1[x], c2[x], value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize4_from(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c1.size())
+		resize3_from(c1[x], c2[x]);
+}
+
+/*###########################################################################*/
+template <typename C1, typename C2, typename T>
+void resize2_from_deref(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		c1[x].resize(c2[x], value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize2_from_deref(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		c1[x].resize(c2[x]);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2, typename T>
+void resize3_from_deref(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		resize2_from_deref(c1[x], c2[x], value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize3_from_deref(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		resize2_from_deref(c1[x], c2[x]);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2, typename T>
+void resize4_from_deref(C1 & c1, const C2 & c2, const T & value) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		resize3_from_deref(c1[x], c2[x], value);
+}
+
+/*===========================================================================*/
+template <typename C1, typename C2>
+void resize4_from_deref(C1 & c1, const C2 & c2) {
+	c1.resize(c2.size());
+	MAP(x, c2.size())
+		resize3_from_deref(c1[x], c2[x]);
+}
+
+/*###########################################################################*/
+template <typename C, typename T>
+void resize(C & con, unsigned a, const T & value) {
+	con.resize(a, value);
+}
+
+/*===========================================================================*/
+template <typename C>
+void resize(C & con, unsigned a) {
+	con.resize(a);
+}
+
+/*===========================================================================*/
+template <typename C, typename T>
+void resize2(C & con, size_t a, size_t b, const T & value) {
+	con.resize(a);
+	MAP(x, con.size())
+		con[x].resize(b, value);
+}
+
+/*===========================================================================*/
+template <typename C> void resize2(C & con, size_t a, size_t b) {
+	con.resize(a);
+	MAP(x, con.size())
+		con[x].resize(b);
+}
+
+/*===========================================================================*/
+template <typename C, typename T>
+void resize3(C & con, size_t a, size_t b, size_t c, const T & value) {
+	con.resize(a);
+	MAP(x, con.size())
+		resize2(con[x], b, c, value);
+}
+
+/*===========================================================================*/
+template <typename C>
+void resize3(C & con, size_t a, size_t b, size_t c) {
+	con.resize(a);
+	MAP(x, con.size())
+		resize2(con[x], b, c);
+}
+
+/*===========================================================================*/
+template <typename C, typename T>
+void resize4(C & con, size_t a, size_t b, size_t c, size_t d,
+	const T & value)
+{
+	con.resize(a);
+	MAP(x, con.size())
+		resize3(con[x], b, c, d, value);	
+}
+
+/*===========================================================================*/
+template <typename C>
+void resize4(C & con, size_t a, size_t b, size_t c, size_t d) {
+	con.resize(a);
+	MAP(x, con.size())
+		resize3(con[x], b, c, d);
+}
+
+/*===========================================================================*/
+template <typename ITER, typename T>
+void set_vec(ITER i, const T & a) {
+	*i = a;
+}
+
+/*===========================================================================*/
+template <typename ITER, typename T>
+void set_vec(ITER i, const T & a, const T & b) {
+	*i = a;
+	*(++i) = b;
+}
+
+/*===========================================================================*/
+template <typename ITER, typename T>
+void set_vec(ITER i, const T & a, const T & b, const T & c) {
+	*i = a;
+	*(++i) = b;
+	*(++i) = c;
+}
+
+/*===========================================================================*/
+template <typename ITER, typename T>
+void set_vec(ITER i, const T & a, const T & b, const T & c, const T & d) {
+	*i = a;
+	*(++i) = b;
+	*(++i) = c;
+	*(++i) = d;
+}
+

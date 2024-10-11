@@ -1,0 +1,25 @@
+#!/bin/sh
+
+files='simple packets creds1'
+
+VISUAL=${VISUAL:-more}
+
+if which psview > /dev/null; then
+	PSVISUAL=psview
+elif which ghostview > /dev/null; then
+	PSVISUAL=ghostview
+fi
+
+for file in $files; do
+	echo Processing $file.
+
+	../tgff $file
+
+	if which $VISUAL >/dev/null; then
+		$VISUAL $file.tgffopt $file.tgff
+	fi
+
+	if which $PSVISUAL >/dev/null; then
+		$PSVISUAL $file.eps
+	fi
+done

@@ -1,0 +1,132 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename T>
+inline T &
+RVector<T>::operator[](size_type a) {
+#ifdef ROB_DEBUG
+	if (a >= size() || a < 0) {
+		std::cerr << "For datatype " << typeid(*this).name() << ": size = " <<
+		  size() << ".  Reference = " << a << ".\n";
+		Rabort();
+	}
+#endif
+
+	return impl_[a];
+}
+
+/*===========================================================================*/
+template <typename T>
+inline const T &
+RVector<T>::operator[](size_type a) const {
+	return runconst(*this)[a];
+}
+
+/*===========================================================================*/
+template <typename T> template <class InIter>
+void RVector<T>::assign(InIter first, InIter last) {
+	impl_.assign(first, last);
+}
+
+/*===========================================================================*/
+template <typename T>
+typename RVector<T>::iterator
+RVector<T>::insert(iterator pos, const T & x) {
+	return impl_.insert(pos, x);
+}
+
+/*===========================================================================*/
+template <typename T> template <typename InIter>
+void RVector<T>::insert(iterator pos, InIter first,
+InIter last) {
+	impl_.insert(pos, first, last);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RVector<T>::insert(iterator pos, size_type n, const T & x) {
+	impl_.insert(pos, n, x);
+}
+
+/*===========================================================================*/
+template <typename T>
+RVector<T> &
+RVector<T>::operator=(const self & a) {
+	impl_ = a.impl_;
+	return *this;
+}
+
+/*===========================================================================*/
+template <typename T>
+comp_type
+RVector<T>::comp_default(const self & b) const {
+	return comp_cont(*this, b);
+}
+
+/*===========================================================================*/
+template <typename T>
+void RVector<T>::self_check_deep() const {
+	self_check();
+	map_self_check_deep(begin(), end());
+}
+
+/*###########################################################################*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+MVector<DIM, T, INDEX>::MVector(size_t n,
+typename super::const_reference value) :
+	super(n, value)
+{}
+
+/*===========================================================================*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+template <typename IT>
+T &
+MVector<DIM, T, INDEX>::operator[](const INDEX<DIM, IT> & indx) {
+	return dim_index<IT>(indx.begin());
+}
+
+/*===========================================================================*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+template <typename IT>
+const T &
+MVector<DIM, T, INDEX>::operator[](const INDEX<DIM, IT> & indx) const {
+	return dim_index<IT>(indx.begin());
+}
+
+/*===========================================================================*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+typename MVector<DIM, T, INDEX>::const_reference
+MVector<DIM, T, INDEX>::operator[](size_type a) const {
+	return super::operator[](a);
+}
+
+/*===========================================================================*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+template <typename IT>
+T & MVector<DIM, T, INDEX>::dim_index(const IT * i) {
+	return (*this)[*i].dim_index(i + 1);
+}
+
+/*===========================================================================*/
+template <int DIM, typename T, template <int, typename> class INDEX>
+template <typename IT>
+const T & MVector<DIM, T, INDEX>::dim_index(const IT * i) const {
+	return (*this)[*i].dim_index(i + 1);
+}
+
+/*################################o##########################################*/
+template <typename T, template <int, typename> class INDEX>
+template <typename IT>
+T &
+MVector<1, T, INDEX>::operator[](const INDEX<1, IT> & a) {
+	return dim_index<IT>(a.begin());
+}
+
+/*===========================================================================*/
+template <typename T, template <int, typename> class INDEX>
+template <typename IT>
+const T &
+MVector<1, T, INDEX>::operator[](const INDEX<1, IT> & a) const {
+	return dim_index<IT>(a.begin());
+}

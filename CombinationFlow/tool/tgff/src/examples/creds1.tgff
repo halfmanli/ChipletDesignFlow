@@ -1,0 +1,242 @@
+@HYPERPERIOD 1.86667e+06
+
+@COMMUN_QUANT 0 {
+# type    quantity
+      0    79.3792
+      1    68.6384
+      2    97.5937
+      3    128.054
+      4    57.4826
+      5    68.1995
+      6     121.02
+      7     86.615
+}
+
+
+
+@TASK_GRAPH 0 {
+	PERIOD 1.86667e+06
+
+	TASK t0_0	TYPE 2 
+	TASK t0_1	TYPE 1 
+	TASK t0_2	TYPE 0 
+	TASK t0_3	TYPE 1 
+	TASK t0_4	TYPE 1 
+	TASK t0_5	TYPE 2 
+	TASK t0_6	TYPE 2 
+	TASK t0_7	TYPE 0 
+	TASK t0_8	TYPE 2 
+	TASK t0_9	TYPE 3 
+	TASK t0_10	TYPE 2 
+	TASK t0_11	TYPE 2 
+	TASK t0_12	TYPE 1 
+
+	ARC a0_0 	FROM t0_0  TO  t0_1 TYPE 2
+	ARC a0_1 	FROM t0_0  TO  t0_2 TYPE 0
+	ARC a0_2 	FROM t0_1  TO  t0_2 TYPE 6
+	ARC a0_3 	FROM t0_2  TO  t0_3 TYPE 7
+	ARC a0_4 	FROM t0_2  TO  t0_4 TYPE 1
+	ARC a0_5 	FROM t0_2  TO  t0_5 TYPE 7
+	ARC a0_6 	FROM t0_2  TO  t0_6 TYPE 2
+	ARC a0_7 	FROM t0_2  TO  t0_7 TYPE 0
+	ARC a0_8 	FROM t0_7  TO  t0_8 TYPE 0
+	ARC a0_9 	FROM t0_7  TO  t0_9 TYPE 5
+	ARC a0_10 	FROM t0_7  TO  t0_10 TYPE 5
+	ARC a0_11 	FROM t0_7  TO  t0_11 TYPE 7
+	ARC a0_12 	FROM t0_7  TO  t0_12 TYPE 6
+
+	HARD_DEADLINE d0_0 ON t0_3 AT 1.4e+06
+	HARD_DEADLINE d0_1 ON t0_4 AT 1.4e+06
+	HARD_DEADLINE d0_2 ON t0_5 AT 1.4e+06
+	HARD_DEADLINE d0_3 ON t0_6 AT 1.4e+06
+	HARD_DEADLINE d0_4 ON t0_8 AT 1.75e+06
+	HARD_DEADLINE d0_5 ON t0_9 AT 1.75e+06
+	HARD_DEADLINE d0_6 ON t0_10 AT 1.75e+06
+	HARD_DEADLINE d0_7 ON t0_11 AT 1.75e+06
+	HARD_DEADLINE d0_8 ON t0_12 AT 1.75e+06
+}
+
+
+@TASK_GRAPH 1 {
+	PERIOD 1.86667e+06
+
+	TASK t1_0	TYPE 1 
+	TASK t1_1	TYPE 2 
+	TASK t1_2	TYPE 0 
+	TASK t1_3	TYPE 0 
+	TASK t1_4	TYPE 1 
+	TASK t1_5	TYPE 2 
+	TASK t1_6	TYPE 0 
+	TASK t1_7	TYPE 1 
+	TASK t1_8	TYPE 1 
+
+	ARC a1_0 	FROM t1_0  TO  t1_1 TYPE 0
+	ARC a1_1 	FROM t1_0  TO  t1_2 TYPE 4
+	ARC a1_2 	FROM t1_0  TO  t1_3 TYPE 4
+	ARC a1_3 	FROM t1_0  TO  t1_4 TYPE 6
+	ARC a1_4 	FROM t1_3  TO  t1_4 TYPE 4
+	ARC a1_5 	FROM t1_1  TO  t1_5 TYPE 4
+	ARC a1_6 	FROM t1_0  TO  t1_5 TYPE 5
+	ARC a1_7 	FROM t1_3  TO  t1_5 TYPE 5
+	ARC a1_8 	FROM t1_2  TO  t1_5 TYPE 6
+	ARC a1_9 	FROM t1_4  TO  t1_5 TYPE 7
+	ARC a1_10 	FROM t1_3  TO  t1_6 TYPE 5
+	ARC a1_11 	FROM t1_2  TO  t1_7 TYPE 0
+	ARC a1_12 	FROM t1_6  TO  t1_7 TYPE 4
+	ARC a1_13 	FROM t1_3  TO  t1_7 TYPE 3
+	ARC a1_14 	FROM t1_4  TO  t1_7 TYPE 6
+	ARC a1_15 	FROM t1_2  TO  t1_8 TYPE 1
+	ARC a1_16 	FROM t1_4  TO  t1_8 TYPE 3
+	ARC a1_17 	FROM t1_5  TO  t1_8 TYPE 4
+
+	HARD_DEADLINE d1_0 ON t1_7 AT 1.4e+06
+	HARD_DEADLINE d1_1 ON t1_8 AT 1.75e+06
+}
+
+
+@TASK_GRAPH 2 {
+	PERIOD 1.86667e+06
+
+	TASK t2_0	TYPE 3 
+	TASK t2_1	TYPE 0 
+	TASK t2_2	TYPE 0 
+	TASK t2_3	TYPE 3 
+	TASK t2_4	TYPE 3 
+	TASK t2_5	TYPE 3 
+	TASK t2_6	TYPE 1 
+	TASK t2_7	TYPE 2 
+	TASK t2_8	TYPE 2 
+	TASK t2_9	TYPE 1 
+	TASK t2_10	TYPE 0 
+
+	ARC a2_0 	FROM t2_0  TO  t2_1 TYPE 2
+	ARC a2_1 	FROM t2_1  TO  t2_2 TYPE 7
+	ARC a2_2 	FROM t2_2  TO  t2_3 TYPE 4
+	ARC a2_3 	FROM t2_3  TO  t2_4 TYPE 7
+	ARC a2_4 	FROM t2_3  TO  t2_5 TYPE 3
+	ARC a2_5 	FROM t2_3  TO  t2_6 TYPE 6
+	ARC a2_6 	FROM t2_6  TO  t2_7 TYPE 3
+	ARC a2_7 	FROM t2_6  TO  t2_8 TYPE 2
+	ARC a2_8 	FROM t2_6  TO  t2_9 TYPE 3
+	ARC a2_9 	FROM t2_6  TO  t2_10 TYPE 7
+
+	HARD_DEADLINE d2_0 ON t2_4 AT 1.75e+06
+	HARD_DEADLINE d2_1 ON t2_5 AT 1.75e+06
+	HARD_DEADLINE d2_2 ON t2_7 AT 2.1e+06
+	HARD_DEADLINE d2_3 ON t2_8 AT 2.1e+06
+	HARD_DEADLINE d2_4 ON t2_9 AT 2.1e+06
+	HARD_DEADLINE d2_5 ON t2_10 AT 2.1e+06
+}
+
+
+
+
+@PROC 0 {
+# price         asynchronous
+  14.9225       0.533132
+
+#------------------------------------------------------------------------------
+# type version exec_time     switch_time   mem_load
+  0    0       291428        2562.28       348.612
+  1    0       36265.8       1691.07       220.784
+  2    0       522782        1485.9        337.893
+  3    0       255102        280.261       131.134
+}
+
+
+@PROC 1 {
+# price         asynchronous
+  13.6379       0.664636
+
+#------------------------------------------------------------------------------
+# type version exec_time     switch_time   mem_load
+  0    0       318666        1100.4        243.559
+  1    0       199389        540.539       138.955
+  2    0       464344        877.682       179.836
+  3    0       44373.8       495.022       145.033
+}
+
+
+@PROC 2 {
+# price         asynchronous
+  11.993        0.648964
+
+#------------------------------------------------------------------------------
+# type version exec_time     switch_time   mem_load
+  0    0       262032        2247.06       200.336
+  1    0       364637        1637.36       195.419
+  2    0       382690        2258.22       271.815
+  3    0       260355        768.633       249.528
+}
+
+
+
+@COMMUN 0 {
+# price        unit_time    contacts
+  100.62       26.452       5.82512
+}
+
+
+@COMMUN 1 {
+# price        unit_time    contacts
+  54.0488      15.1977      2.2405
+}
+
+
+@COMMUN 2 {
+# price        unit_time    contacts
+  74.5875      45.7548      2.59789
+}
+
+
+
+@FPGA_FAMILY 0 {
+# mem_per_device
+  0.000976562
+
+#------------------------------------------------------------------------------
+# type version exec_time       devices
+  0    0       4794.83         199.605
+  1    0       16667           353.347
+  2    0       31373.4         1940.75
+  3    0       26662.7         305.852
+}
+
+
+
+@FPGA 0 {
+# price            devices          exec_time_mul    config_time_mul
+  14               4096             1                0.005
+}
+
+
+
+@FPGA 1 {
+# price            devices          exec_time_mul    config_time_mul
+  26               16384            1                0.005
+}
+
+
+
+@FPGA 2 {
+# price            devices          exec_time_mul    config_time_mul
+  10               4096             0.87             0.0043
+}
+
+
+
+@FPGA 3 {
+# price            devices          exec_time_mul    config_time_mul
+  23               16384            0.87             0.0043
+}
+
+
+
+@MEMORY 0 {
+# price
+  0.00228085
+}
+
+
+
+

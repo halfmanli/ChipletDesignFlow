@@ -1,0 +1,22 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*===========================================================================*/
+inline void rassert(bool x, const char * file, int line) {
+	if (! x) {
+		rabort(file, line, "Assertion failed.  Aborting.\n");
+	}
+}
+
+/*===========================================================================*/
+inline int to_signed(unsigned x)
+	{ RASSERT(static_cast<int>(x) >= 0); return static_cast<int>(x); }
+
+inline long to_signed(unsigned long x)
+	{ RASSERT(static_cast<long>(x) >= 0); return static_cast<long>(x); }
+
+inline unsigned to_unsigned(int x)
+	{ RASSERT(x >= 0); return static_cast<unsigned>(x); }
+
+inline unsigned long to_unsigned(long x)
+	{ RASSERT(x >= 0); return static_cast<unsigned long>(x); }

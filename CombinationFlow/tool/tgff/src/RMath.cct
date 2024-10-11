@@ -1,0 +1,131 @@
+// Copyright 2017 by Robert Dick.
+// All rights reserved.
+
+/*###########################################################################*/
+template <typename T, typename P>
+T ring_mod(T a, P period) {
+	RASSERT(period > 0);
+	if (a >= 0) {
+		return a % period;
+	} else {
+		return ((a + 1) % period) + period - 1;
+	}
+}
+
+/*===========================================================================*/
+template <typename P>
+unsigned ring_mod(unsigned a, P period) {
+	RASSERT(period > 0);
+	return a % period;
+}
+
+/*===========================================================================*/
+template <typename P>
+unsigned long ring_mod(unsigned long a, P period) {
+	RASSERT(period > 0);
+	return a % period;
+}
+
+/*===========================================================================*/
+template <typename P>
+double ring_mod(double a, P period) {
+	RASSERT(period > 0);
+	return (a >= 0) ? fmod(a, period) : fmod(a + 1, period) + period - 1;
+}
+
+/*===========================================================================*/
+template <typename P>
+float ring_mod(float a, P period) {
+	RASSERT(period > 0);
+	return (a >= 0) ? fmod(a, period) : fmod(a + 1, period) + period - 1;
+}
+
+/*###########################################################################*/
+template <typename T, typename P>
+T interval_round(T a, P period) {
+	RASSERT(period > 0);
+	return a >= 0 ? ((2 * a + period) / (2 * period)) * period :
+	  ((2 * a + 1 - period) / (2 * period)) * period;
+}
+
+/*===========================================================================*/
+template <typename P>
+double interval_round(double a, P period) {
+	RASSERT(period > 0);
+	double ret = rint(a / period) * period;
+	if (ret == -0.0) {
+		ret = 0.0;
+	}
+	return ret;
+}
+
+/*===========================================================================*/
+template <typename P>
+float interval_round(float a, P period) {
+	RASSERT(period > 0);
+	double ret = rint(a / period) * period;
+	if (ret == -0.0) {
+		ret = 0.0;
+	}
+	return ret;
+}
+
+/*===========================================================================*/
+template<typename D>
+D clip(const D & x, D low, D high) {
+	return std::min(std::max(x, low), high);
+}
+
+/*===========================================================================*/
+template <typename T>
+bool isfinite(const T & a) {
+	return a < std::numeric_limits<T>::infinity() &&
+		a > -std::numeric_limits<T>::infinity();
+}
+
+/*###########################################################################*/
+inline const MathVec
+MathVec::operator+(const MathVec & a) const {
+	return MathVec(*this) += a;
+}
+
+inline const MathVec
+MathVec::operator+(const MathVec::value_type & a) const {
+	return MathVec(*this) += a;
+}
+
+inline const MathVec
+MathVec::operator-(const MathVec & a) const {
+	return MathVec(*this) -= a;
+}
+
+inline const MathVec
+MathVec::operator-(const MathVec::value_type & a) const {
+	return MathVec(*this) -= a;
+}
+
+inline const MathVec
+MathVec::operator/(const MathVec & a) const {
+	return MathVec(*this) /= a;
+}
+
+inline const MathVec
+MathVec::operator/(const MathVec::value_type & a) const {
+	return MathVec(*this) /= a;
+}
+
+inline const MathVec
+flat_mul(const MathVec & a, const MathVec & b) {
+	return MathVec(a).flat_mul(b);
+}
+
+inline const MathVec
+flat_mul(const MathVec & a,
+const MathVec::value_type & b) {
+	return MathVec(a).flat_mul(b);
+}
+
+template <typename T>
+T rnlimits<T>::smallest() {
+	return super::is_integer ? super::min() : -super::max();
+}

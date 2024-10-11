@@ -1,0 +1,43 @@
+#---------------------------------------------
+# Series-parallel graph generation example
+#---------------------------------------------
+# Basic definitions
+seed 1
+period_mul 1
+tg_cnt 4
+
+# Note, this only sets lower bound for number of tasks
+task_cnt 20 1
+
+#---------------------------------------------
+# New options
+#---------------------------------------------
+# Turn on series-parallel graph generation
+#      (Graph is recursively generated as long as the lower bound on the 
+#       number of tasks isn't met)
+gen_series_parallel
+
+# Sets the average number of chains to 4 (+/- 2)
+series_wid 4 2
+
+# Sets the average chains length to 5 (+/- 3)
+series_len 5 3
+
+# This allows chains to not rejoin with probability .7
+series_must_rejoin 0
+series_subgraph_fork_out .7
+
+#-------------------------------------------------
+# Output commands
+#-------------------------------------------------
+tg_write
+eps_write
+vcg_write
+
+table_label COMMUN
+table_cnt 3
+table_offset COMMUN 12
+table_attrib price 80 20
+type_attrib exec_time 50 20
+trans_write
+
